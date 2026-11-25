@@ -1,0 +1,458 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Plate — تمرين وتغذية في مكان واحد</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&family=Chakra+Petch:wght@500;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3effa;--sf:#fff;--sf2:#ebe5f7;--tx:#1d1537;--mu:#6d6490;--ac:#e0246a;--am:#e08a00;--cy:#0a8fb0;--ln:#d9d0ee;--bx:border-box;color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#130f2a;--sf:#1d1840;--sf2:#2a2358;--tx:#f3efff;--mu:#9d93c9;--ac:#ff3d81;--am:#ffb627;--cy:#3de0ff;--ln:#352e68;color-scheme:dark}}
+*{box-sizing:border-box;margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--tx);font:600 15px/1.6 Cairo,system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+.num{font-family:'Chakra Petch',monospace;direction:ltr;unicode-bidi:isolate}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.28;z-index:0;animation:fl 14s ease-in-out infinite alternate;pointer-events:none}
+.b1{width:340px;height:340px;background:var(--ac);top:-80px;right:-60px}.b2{width:300px;height:300px;background:var(--cy);bottom:-60px;left:-60px;animation-delay:-6s}
+@keyframes fl{to{transform:translate(60px,80px) scale(1.25)}}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln);padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font:900 24px Cairo}
+.plate{width:34px;height:34px;border-radius:50%;border:5px solid var(--ac);position:relative;animation:sp 8s linear infinite}
+.plate:after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--bg);border:3px solid var(--am)}
+@keyframes sp{to{transform:rotate(360deg)}}
+nav{display:flex;gap:6px;margin-inline-start:auto;overflow-x:auto}
+nav button{background:none;border:0;color:var(--mu);font:800 14px Cairo;padding:8px 16px;border-radius:99px;cursor:pointer;transition:.25s;white-space:nowrap}
+nav button:hover{color:var(--tx);transform:translateY(-2px)}nav button.on{background:var(--ac);color:#fff;box-shadow:0 6px 20px -4px var(--ac)}
+main{position:relative;z-index:1;max-width:1000px;margin:auto;padding:20px 16px 80px}
+.pg{animation:pgIn .55s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes pgIn{from{opacity:0;transform:translateY(24px) scale(.98)}}
+h2{font:900 30px/1.2 Cairo;margin-bottom:4px}.sub{color:var(--mu);margin-bottom:18px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:16px;transition:.3s}
+.card:hover{transform:translateY(-4px);border-color:var(--ac)}
+.stat{position:relative;overflow:hidden}.stat .v{font:700 42px/1 'Chakra Petch';direction:ltr;text-align:right}
+.stat .l{color:var(--mu);font-size:13px}.stat:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;border:12px solid var(--ac);opacity:.12;left:-20px;bottom:-30px;transition:.5s}.stat:hover:after{transform:scale(1.8) rotate(90deg)}
+.stat:nth-child(2):after{border-color:var(--cy)}.stat:nth-child(3):after{border-color:var(--am)}
+.sec{margin:26px 0 10px;font:900 20px Cairo}
+.bars{display:flex;align-items:flex-end;gap:6px;height:150px;direction:ltr}
+.bar{flex:1;background:linear-gradient(var(--ac),var(--am));border-radius:8px 8px 3px 3px;min-height:4px;transform-origin:bottom;animation:gr .9s cubic-bezier(.2,.9,.3,1.1) both;position:relative}
+.bar:hover{filter:brightness(1.25)}.bar span{position:absolute;bottom:calc(100% + 3px);left:50%;transform:translateX(-50%);font:700 10px 'Chakra Petch';opacity:0;transition:.2s}.bar:hover span{opacity:1}
+@keyframes gr{from{transform:scaleY(0)}}
+.lbls{display:flex;gap:6px;direction:ltr;color:var(--mu);font:500 10px 'Chakra Petch';margin-top:4px}.lbls i{flex:1;text-align:center;font-style:normal}
+button.b,.b{border:0;border-radius:12px;padding:9px 16px;font:800 14px Cairo;cursor:pointer;background:var(--ac);color:#fff;transition:.2s;position:relative;overflow:hidden}
+.b:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 20px -6px var(--ac)}.b:active{transform:scale(.94)}
+.b.g{background:var(--sf2);color:var(--tx)}.b.g:hover{box-shadow:none}.b.d{background:none;color:var(--mu);padding:6px 10px}.b.d:hover{color:var(--ac);box-shadow:none}
+input,textarea,select{background:var(--sf2);border:2px solid transparent;color:var(--tx);border-radius:12px;padding:9px 12px;font:600 15px Cairo;width:100%;transition:.2s;outline:0}
+input:focus,textarea:focus{border-color:var(--cy);box-shadow:0 0 0 4px color-mix(in srgb,var(--cy) 20%,transparent)}
+input[type=number],input[type=date]{font-family:'Chakra Petch';direction:ltr;text-align:center}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ex{margin-bottom:14px;animation:pgIn .45s both}
+.exh{display:flex;align-items:center;gap:8px;margin-bottom:8px}.exh b{font:900 18px Cairo;flex:1;cursor:pointer}
+.chip{font:700 12px Cairo;padding:3px 10px;border-radius:99px;background:var(--sf2);color:var(--mu)}
+.chip.up{background:color-mix(in srgb,var(--am) 25%,transparent);color:var(--am);animation:pu 1.4s infinite}.chip.eq{color:var(--cy)}
+@keyframes pu{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--am) 0%,transparent);transform:scale(1.08)}}
+.set{display:grid;grid-template-columns:34px 1fr 1fr 34px;gap:8px;align-items:center;margin-bottom:6px;animation:pgIn .3s both}
+.set .n{width:30px;height:30px;border-radius:50%;border:3px solid var(--ac);display:grid;place-items:center;font:700 12px 'Chakra Petch'}
+.set small{color:var(--mu);font-size:11px;display:block;text-align:center}
+.days{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.day.today{border-color:var(--cy);box-shadow:0 0 0 3px color-mix(in srgb,var(--cy) 25%,transparent)}.day.done:before{content:"✓ تم";float:left;color:var(--am);font-weight:800}
+.dn{font:700 28px 'Chakra Petch';color:var(--ac);line-height:1}.pl{padding:2px 0;color:var(--mu);font-size:14px}.pl:before{content:"● ";color:var(--ac);font-size:10px}
+.lib{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.lib .im{height:130px;border-radius:14px;background:var(--sf2) center/cover;display:grid;place-items:center;font-size:40px;margin-bottom:10px;overflow:hidden;transition:.4s}.lib .card:hover .im{transform:scale(1.04) rotate(-1deg)}
+.ov{position:fixed;inset:0;background:#0009;backdrop-filter:blur(6px);z-index:50;display:grid;place-items:center;padding:14px;animation:fi .25s}
+.md{background:var(--sf);border-radius:24px;padding:20px;width:100%;max-width:520px;max-height:90vh;overflow:auto;animation:po .4s cubic-bezier(.2,1.3,.4,1);border:1px solid var(--ln)}
+@keyframes fi{from{opacity:0}}@keyframes po{from{opacity:0;transform:scale(.8) translateY(30px)}}
+.fld{margin-bottom:12px}.fld label{display:block;font-size:13px;color:var(--mu);margin-bottom:4px}
+.pick{display:flex;flex-wrap:wrap;gap:6px}.pick span{padding:6px 12px;border-radius:99px;background:var(--sf2);cursor:pointer;transition:.2s;font-size:14px}.pick span.on{background:var(--ac);color:#fff;transform:scale(1.06)}
+.empty{text-align:center;color:var(--mu);padding:30px}.empty .em{font-size:44px;animation:bo 2s infinite}@keyframes bo{50%{transform:translateY(-10px)}}
+.tr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--ln)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 20px;border-radius:99px;z-index:99;animation:po .4s,fi .3s reverse 1.8s forwards}
+.fab{position:fixed;bottom:20px;left:20px;z-index:30;width:56px;height:56px;border-radius:50%;font-size:26px;padding:0;display:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:600px){h2{font-size:24px}nav button{padding:8px 11px}}
+:root{--bg:#dfe2e7;--sf:#f4f5f7;--sf2:#e4e8ee;--tx:#14181f;--mu:#586270;--ac:#e8420c;--am:#c98600;--cy:#0a7fb0;--ln:#c3c9d3;--cut:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px))}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1217;--sf:#1a1f27;--sf2:#262d38;--tx:#eef1f5;--mu:#8e98a8;--ac:#ff5a1f;--am:#ffc233;--cy:#4fc3f7;--ln:#303846}}
+body{background-image:repeating-linear-gradient(45deg,transparent 0 7px,color-mix(in srgb,var(--tx) 3%,transparent) 7px 8px),repeating-linear-gradient(-45deg,transparent 0 7px,color-mix(in srgb,var(--tx) 3%,transparent) 7px 8px)}
+h2,.logo,.sec,.rn,.spl{font-family:Oswald,Cairo,sans-serif;font-weight:700}html[lang=en] h2{text-transform:uppercase;letter-spacing:.05em}
+header:after{content:"";position:absolute;inset:auto 0 -3px;height:3px;background:repeating-linear-gradient(45deg,var(--ac) 0 10px,transparent 10px 20px)}
+.card,.md{border:0;border-inline-start:5px solid var(--ac);border-radius:0;clip-path:var(--cut);background:radial-gradient(260px circle at var(--mx,50%) var(--my,-80%),color-mix(in srgb,var(--ac) 22%,transparent),transparent 65%),var(--sf)}
+.card:hover{border-color:var(--am);transform:translateY(-5px) rotate(-.3deg)}.day.today{border-color:var(--cy)}
+.b{border-radius:0;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);font-family:Oswald,Cairo;letter-spacing:.03em;padding:9px 20px}
+.b:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,#fff6 50%,transparent 70%);transform:translateX(-130%);transition:transform .6s}.b:hover:after{transform:translateX(130%)}
+nav button{border-radius:0;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);font-family:Oswald,Cairo}
+input,textarea{border-radius:3px;border-bottom:3px solid var(--ln)}input:focus,textarea:focus{border-color:transparent;border-bottom-color:var(--ac);box-shadow:none}
+.chip,.pick span{border-radius:2px}.pick span:hover{transform:translateY(-2px)}
+.grid>.card{animation:pgIn .6s both}.grid>.card:nth-child(2){animation-delay:.12s}.grid>.card:nth-child(3){animation-delay:.24s}
+.hero{position:relative;overflow:hidden;margin-bottom:14px;padding:22px}.hero:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;border:34px solid var(--ac);opacity:.1;inset-inline-end:-70px;top:-60px;animation:sp 20s linear infinite}
+.hero small{color:var(--mu)}.rn{font-size:clamp(44px,10vw,80px);line-height:1;letter-spacing:.05em;background:linear-gradient(90deg,var(--ac),var(--am));-webkit-background-clip:text;background-clip:text;color:transparent;animation:slam .7s both;width:fit-content}
+@keyframes slam{from{opacity:0;transform:scale(2.2)}}
+.rbar{height:14px;background:var(--sf2);transform:skewX(-20deg);overflow:hidden;margin:12px 0 8px;max-width:420px}.rbar i{display:block;width:100%;height:100%;transform:scaleX(var(--p));transform-origin:right;background:repeating-linear-gradient(45deg,var(--ac) 0 8px,var(--am) 8px 16px);animation:fw 1.4s .4s both}html[lang=en] .rbar i{transform-origin:left}@keyframes fw{from{transform:scaleX(0)}}
+.qt{font:700 18px Cairo;margin-top:8px;animation:pgIn .8s .6s both}
+#splash{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;animation:sx .5s 2s forwards}
+.bell{display:flex;align-items:center;direction:ltr}.bell i{width:16px;margin:0 2px;border-radius:3px;background:linear-gradient(var(--ac),#8f2400);animation:pin .55s cubic-bezier(.2,1.4,.4,1) both;--d:-320px}.bell i:nth-child(n+5){--d:320px}.bell b{width:160px;height:10px;background:linear-gradient(#dfe3ea,#5a6475);animation:pin .4s both}
+.bell i:nth-child(1),.bell i:nth-child(7){height:112px;animation-delay:.9s}.bell i:nth-child(2),.bell i:nth-child(6){height:84px;animation-delay:.7s}.bell i:nth-child(3),.bell i:nth-child(5){height:56px;animation-delay:.5s}
+@keyframes pin{from{transform:translateX(var(--d,0));opacity:0}}@keyframes sx{to{opacity:0;visibility:hidden}}.spl{font-size:46px;letter-spacing:.35em;animation:slam .5s 1.3s both}
+.rt{position:fixed;bottom:18px;inset-inline-start:18px;display:flex;align-items:center;gap:8px;background:var(--sf);border-inline-start:5px solid var(--ac);padding:6px 14px;z-index:40;animation:po .4s}.rt svg{width:46px}.rt b{font-size:24px}
+.sp{position:fixed;width:7px;height:7px;background:var(--am);border-radius:50%;pointer-events:none;z-index:99;animation:spk .9s ease-out forwards}@keyframes spk{to{transform:translate(var(--x),var(--y)) scale(0);opacity:0}}
+html[lang=en] .day.done:before{content:"✓ Done";float:right}html[lang=en] .stat .v{text-align:left}.day.done:before{font-family:Cairo}.lg{margin-inline-end:6px}
+.set{grid-template-columns:34px 1fr 1fr 34px 34px}.set.dp{border-inline-start:3px dashed var(--am);padding-inline-start:6px}.set.dp .n{border-color:var(--am);color:var(--am)}.b.d.on{color:var(--am)}
+.ex.ss{border-inline-start-color:var(--cy)}.ex.ssb{margin-top:-8px}.ex.ssa{margin-bottom:6px}.ssl{font:700 12px Oswald,Cairo;color:var(--cy);margin-bottom:4px;letter-spacing:.1em}
+.dnm{flex:1;min-width:160px;font:700 28px Oswald,Cairo;background:none;border-bottom:3px solid var(--ac)}
+.mrow{margin-bottom:10px}.mrow select{flex:0 0 160px;width:auto}.mrow input{flex:1;min-width:130px}select option{background:var(--sf);color:var(--tx)}
+.mb{display:grid;grid-template-columns:96px 1fr 30px;gap:10px;align-items:center;margin:7px 0}.mb div{background:var(--sf2);height:10px;overflow:hidden}.mb i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--am));transform-origin:right;animation:gw .9s both}html[lang=en] .mb i{transform-origin:left}@keyframes gw{from{transform:scaleX(0)}}
+.av{width:64px;height:64px;border-radius:50%;background:var(--sf2) center/cover;display:grid;place-items:center;font:700 26px Oswald,Cairo;border:3px solid var(--ac);flex:none;overflow:hidden;animation:slam .6s both}.av.big{width:104px;height:104px;font-size:34px;cursor:pointer;transition:.3s}.av.big:hover{transform:rotate(-6deg) scale(1.06)}
+.pcard{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}.pcard .pi{flex:1;min-width:200px}.pn{font:700 28px Oswald,Cairo;line-height:1.1}.pch{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.pch .chip{font-size:13px}
+.pf{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:16px 0}
+</style></head><body>
+<div class="blob b1"></div><div class="blob b2"></div>
+<header><div class="logo"><div class="plate"></div>Plate</div><nav id="nav"></nav></header>
+<main id="app"></main><div id="mod"></div><div id="rest"></div>
+<div id="splash" onclick="this.remove()"><div class="bell"><i></i><i></i><i></i><b></b><i></i><i></i><i></i></div><div class="spl">PLATE</div></div>
+<script>
+const $=s=>document.querySelector(s),uid=()=>Math.random().toString(36).slice(2,9);
+const pad=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const fromIso=s=>{const[a,b,c]=s.split('-');return new Date(+a,b-1,+c)};
+const addD=(s,n)=>{const d=fromIso(s);d.setDate(d.getDate()+n);return iso(d)};
+const TODAY=iso(new Date()),DN=['الأحد','الاتنين','التلات','الأربع','الخميس','الجمعة','السبت'];
+let S={ex:{},w:{},p:{}};try{S=JSON.parse(localStorage.getItem('plate1'))||S}catch(e){}
+const save=()=>{try{localStorage.setItem('plate1',JSON.stringify(S))}catch(e){toast('التخزين ممتلي أو مش متاح')}};
+let tab='dash',logDate=TODAY,wkStart=(()=>{const d=new Date();d.setDate(d.getDate()-((d.getDay()+1)%7));return iso(d)})();
+let LANG='ar';try{LANG=localStorage.lang||'ar'}catch(e){}
+const U=[],esc=s=>{U.push(String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));return '\uE000'+(U.length-1)+'\uE001'};
+const E={"الداشبورد":"Dashboard","تمرين اليوم":"Today","البلانر":"Planner","التمارين":"Exercises","الأحد":"Sun","الاتنين":"Mon","التلات":"Tue","الأربع":"Wed","الخميس":"Thu","الجمعة":"Fri","السبت":"Sat","أهلاً يا بطل 👋":"Welcome back, champ 👋"," — شوف وصلت لفين":" — see how far you've come","تمارين آخر 7 أيام":"Workouts, last 7 days","إجمالي الحجم (كجم × عدة)":"Total volume (kg × reps)","أيام ورا بعض 🔥":"Day streak 🔥","حجم التمرين آخر 14 يوم":"Training volume, last 14 days","النهاردة":"Today","تمرين":"Workout","ابدأ التمرين":"Start workout","مفيش بلان النهاردة":"No plan for today","خطط يومك":"Plan your day","أرقام قياسية جديدة 🏆":"New PRs 🏆","لسه مفيش — كمل وهتكسرها":"None yet — keep pushing","آخر التمارين":"Recent workouts","سجل أول تمرين ليك":"Log your first workout","الرتبة":"Rank","باقي ":""," كجم لرتبة ":" kg to rank ","وصلت لقمة الرتب 👑":"You reached the top rank 👑","مبتدئ":"ROOKIE","حديد":"IRON","صلب":"STEEL","تيتان":"TITAN","أسطورة":"LEGEND","الحديد مش بيكدب":"Iron never lies","اللي بتعمله النهاردة بيبني جسمك بكرة":"What you do today builds your body tomorrow","كيلو زيادة واحد بيفرق":"One extra kilo makes the difference","التعب مؤقت والنتيجة دايمة":"Pain is temporary, results are permanent","متستناش الحافز، اعمل عادة":"Don't wait for motivation, build the habit","اسم اليوم: Push / Pull / Legs...":"Day name: Push / Pull / Legs...","🗑 مسح اليوم":"🗑 Delete day","مفيش تمرين متسجل في اليوم ده":"No workout logged for this day","ابدأ من البلان (":"Start from plan (","+ تمرين جديد":"+ New exercise","تمرين جديد...":"New exercise...","تمرين جديد":"New workout","أضف تمرين (اكتب اسم جديد أو اختار)":"Add exercise (type a new name or pick)","+ أضف":"+ Add","الحجم الكلي: ":"Total volume: ","آخر مرة ":"Last time ","أول مرة تلعبه ✨":"First time doing it ✨","كجم":"kg","عدات":"reps","+ مجموعة":"+ Set","نفس الوزن":"Same weight","اتحمّل البلان 💪":"Plan loaded 💪","ابدأ":"Start","تمسح تمرين اليوم ده؟":"Delete this day's workout?","الأسبوع ده":"This week","+ خطط اليوم":"+ Plan day","عدّل":"Edit","نوع التمرين":"Workout type","اختار التمارين (دوس تاني للإزالة)":"Pick exercises (tap again to remove)","مفيش تمارين لسه، أضف من تحت":"No exercises yet, add below","حفظ":"Save","إلغاء":"Cancel","اتحفظ ✓":"Saved ✓","كل تمرين ممكن تضيف له وصف ولينك وصورة (اختياري)":"Add a description, link and image to any exercise (optional)","تفاصيل":"Details","ضيف أول تمرين":"Add your first exercise","تعديل":"Edit","إضافة تمرين":"Add exercise","الاسم":"Name","وصف (اختياري)":"Description (optional)","لينك فيديو/شرح (اختياري)":"Video / guide link (optional)","صورة (اختياري)":"Image (optional)","شيل الصورة":"Remove image","اكتب اسم التمرين":"Enter the exercise name","تمسح التمرين؟ هيتشال من الأيام والبلانات كمان":"Delete exercise? It will be removed from logs and plans too","تطور أعلى وزن":"Top weight progress","لسه مفيش بيانات للرسم":"No data to chart yet","🔗 فتح اللينك":"🔗 Open link","إغلاق":"Close","التخزين ممتلي أو مش متاح":"Storage full or unavailable","راحة":"Rest","خلصت الراحة! كمل 💪":"Rest over! Go 💪","›":"❮","‹":"❯"};
+const KEYS=Object.keys(E).sort((a,b)=>b.length-a.length);
+const T=h=>{if(LANG=='en')for(const k of KEYS)h=h.split(k).join(E[k]);return h.replace(/\uE000(\d+)\uE001/g,(_,i)=>U[i])};
+function setLang(){LANG=LANG=='en'?'ar':'en';try{localStorage.lang=LANG}catch(e){}render()}
+const vol=w=>w?w.exs.reduce((a,e)=>a+e.sets.reduce((b,s)=>b+(+s.w||0)*(+s.r||0),0),0):0;
+const best=sets=>Math.max(0,...sets.map(s=>+s.w||0));
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=T(t);document.body.append(d);setTimeout(()=>d.remove(),2300)}
+function getEx(name){name=name.trim();if(!name)return null;let k=Object.keys(S.ex).find(i=>S.ex[i].name.toLowerCase()==name.toLowerCase());if(!k){k=uid();S.ex[k]={name,desc:'',link:'',img:''}}return k}
+function hist(id,before){const ds=Object.keys(S.w).filter(d=>d<before&&S.w[d].exs.some(e=>e.id==id)).sort();if(!ds.length)return null;const d=ds[ds.length-1];return{date:d,sets:S.w[d].exs.find(e=>e.id==id).sets}}
+function allBest(id,before){let m=0;for(const d in S.w)if(!before||d<before)S.w[d].exs.forEach(e=>{if(e.id==id)m=Math.max(m,best(e.sets))});return m}
+const fmtD=s=>{const d=fromIso(s);return DN[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1)};
+function go(t){tab=t;render()}
+function render(){
+ U.length=0;document.documentElement.lang=LANG;document.documentElement.dir=LANG=='en'?'ltr':'rtl';$('#nav').innerHTML='<button class="b g lg" onclick="setLang()">'+(LANG=='en'?'عربي':'EN')+'</button>'+[['dash','الداشبورد'],['log','تمرين اليوم'],['plan','البلانر'],['lib','التمارين'],['nut','التغذية'],['prof','البروفايل']].map(([k,n])=>`<button class="${tab==k?'on':''}" onclick="go('${k}')">${T(n)}</button>`).join('');
+ const v={dash,log,plan,lib,nut,prof}[tab]();$('#app').innerHTML=T(`<div class="pg">${v}</div>`);
+ document.querySelectorAll('[data-n]').forEach(el=>{const to=+el.dataset.n,t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/900);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString('en');if(p<1)requestAnimationFrame(f)})(t0)});
+}
+/* DASH */
+function dash(){
+ const ds=Object.keys(S.w).filter(d=>S.w[d].exs.length),w7=ds.filter(d=>d>addD(TODAY,-7)&&d<=TODAY);
+ let streak=0,c=ds.includes(TODAY)?TODAY:addD(TODAY,-1);while(ds.includes(c)){streak++;c=addD(c,-1)}
+ const v7=w7.reduce((a,d)=>a+vol(S.w[d]),0);
+ let prs=[];for(const id in S.ex){const l=ds.filter(d=>S.w[d].exs.some(e=>e.id==id)).sort();if(l.length<2)continue;const last=l[l.length-1],b=best(S.w[last].exs.find(e=>e.id==id).sets);if(b>allBest(id,last))prs.push([id,b,last])}
+ const days=[...Array(14)].map((_,i)=>addD(TODAY,i-13)),vs=days.map(d=>vol(S.w[d])),mx=Math.max(1,...vs);
+ const tp=S.p[TODAY],tv=Object.values(S.w).reduce((a,w)=>a+vol(w),0),LV=[[0,'مبتدئ'],[5000,'حديد'],[25000,'صلب'],[100000,'تيتان'],[300000,'أسطورة']],li=LV.filter(l=>tv>=l[0]).length-1,nx=LV[li+1],pc=nx?(tv-LV[li][0])/(nx[0]-LV[li][0]):1,Q=['الحديد مش بيكدب','اللي بتعمله النهاردة بيبني جسمك بكرة','كيلو زيادة واحد بيفرق','التعب مؤقت والنتيجة دايمة','متستناش الحافز، اعمل عادة'];
+ const rec=ds.sort().reverse().slice(0,4).map(d=>`<div class="tr"><span>${fmtD(d)} — ${esc(S.w[d].type||'تمرين')}</span><span class="num">${vol(S.w[d]).toLocaleString('en')} kg</span></div>`).join('');
+ return `<h2>${S.pf&&S.pf.name?'أهلاً يا '+esc(S.pf.name)+' 👋':'أهلاً يا بطل 👋'}</h2><p class="sub">${fmtD(TODAY)} — شوف وصلت لفين</p>
+ ${profCard()}<div class="card hero"><p class="qt" style="margin:0;font-size:22px">“${Q[new Date().getDate()%Q.length]}”</p></div>
+ <div class="grid"><div class="card stat"><div class="v" data-n="${w7.length}">0</div><div class="l">تمارين آخر 7 أيام</div></div>
+ <div class="card stat"><div class="v" data-n="${v7}">0</div><div class="l">إجمالي الحجم (كجم × عدة)</div></div>
+ <div class="card stat"><div class="v" data-n="${streak}">0</div><div class="l">أيام ورا بعض 🔥</div></div></div>
+ <div class="sec">حجم التمرين آخر 14 يوم</div><div class="card"><div class="bars">${vs.map((x,i)=>`<div class="bar" style="height:${Math.max(3,x/mx*100)}%;animation-delay:${i*60}ms"><span>${x}</span></div>`).join('')}</div><div class="lbls">${days.map(d=>`<i>${+d.slice(8)}</i>`).join('')}</div></div>
+ ${muscleCard()}<div class="grid" style="margin-top:14px">
+ <div class="card"><div class="sec" style="margin-top:0">النهاردة</div>${tp?`<b>${esc(tp.type||'تمرين')}</b>${tp.exs.map(i=>`<div class="pl">${esc(S.ex[i]?.name)}</div>`).join('')}<button class="b" style="margin-top:10px" onclick="startPlan('${TODAY}')">ابدأ التمرين</button>`:`<div class="empty" style="padding:10px"><div class="em">🗓️</div>مفيش بلان النهاردة<br><button class="b g" style="margin-top:8px" onclick="go('plan')">خطط يومك</button></div>`}</div>
+ <div class="card"><div class="sec" style="margin-top:0">أرقام قياسية جديدة 🏆</div>${prs.length?prs.map(([id,b,d])=>`<div class="tr"><span>${esc(S.ex[id].name)}</span><span class="chip up num">${b} kg</span></div>`).join(''):'<div class="pl">لسه مفيش — كمل وهتكسرها</div>'}</div>
+ <div class="card"><div class="sec" style="margin-top:0">آخر التمارين</div>${rec||'<div class="pl">سجل أول تمرين ليك</div>'}</div></div>`}
+/* LOG */
+function log(){
+ const w=S.w[logDate];
+ let h=`<h2>تمرين اليوم</h2><div class="row" style="margin:10px 0 16px"><button class="b g" onclick="shiftLog(-1)">›</button><input type="date" value="${logDate}" onchange="logDate=this.value;render()" style="max-width:170px"><button class="b g" onclick="shiftLog(1)">‹</button><span class="sub" style="margin:0">${fmtD(logDate)}</span></div>`;
+ if(!w){const p=S.p[logDate];return h+`<div class="card empty"><div class="em">🏋️</div><p>مفيش تمرين متسجل في اليوم ده</p><div class="row" style="justify-content:center;margin-top:12px">${p?`<button class="b" onclick="startPlan('${logDate}')">ابدأ من البلان (${esc(p.type||'')})</button>`:''}<button class="b ${p?'g':''}" onclick="newW()">تمرين جديد</button></div></div>`}
+ h+=`<div class="row" style="margin-bottom:14px"><input list="types" placeholder="اسم اليوم: Push / Pull / Legs..." value="${esc(w.type)}" oninput="S.w[logDate].type=this.value;save()" style="flex:1;min-width:180px"><datalist id="types">${['Push','Pull','Legs','Upper','Lower','Full Body','Chest','Back','Shoulders','Arms'].map(t=>`<option>${t}</option>`).join('')}</datalist><button class="b d" onclick="delW()">🗑 مسح اليوم</button></div>`;
+ h+=w.exs.map((e,i)=>exCard(e,i)).join('');
+ h+=`<div class="card"><div class="row"><input id="newEx" list="exl" placeholder="أضف تمرين (اكتب اسم جديد أو اختار)" style="flex:1;min-width:180px" onkeydown="if(event.key=='Enter')addEx()"><datalist id="exl">${Object.values(S.ex).map(x=>`<option>${esc(x.name)}</option>`).join('')}</datalist><button class="b" onclick="addEx()">+ أضف</button></div></div>
+ <p class="sub" style="margin-top:12px">الحجم الكلي: <b class="num">${vol(w).toLocaleString('en')} kg</b></p>`;return h}
+function exCard(e,i){
+ const x=S.ex[e.id]||{name:'?'},l=hist(e.id,logDate);
+ return `<div class="card ex" style="animation-delay:${i*70}ms"><div class="exh"><b onclick="info('${e.id}')">${esc(x.name)}</b><span class="chip" id="bd${i}">${badge(e,i)}</span><button class="b d" onclick="info('${e.id}')">ℹ</button><button class="b d" onclick="delEx(${i})">✕</button></div>
+ <div class="chip" style="display:inline-block;margin-bottom:8px">${l?`آخر مرة ${fmtD(l.date)}: <span class="num">${l.sets.map(s=>s.w+'×'+s.r).join(' · ')}</span>`:'أول مرة تلعبه ✨'}</div>
+ ${e.sets.map((s,j)=>`<div class="set"><div class="n">${j+1}</div><div><input type="number" inputmode="decimal" min="0" step="any" value="${s.w}" placeholder="${l?.sets[j]?.w??'كجم'}" oninput="setV(${i},${j},'w',this.value)"></div><div><input type="number" inputmode="numeric" min="0" value="${s.r}" placeholder="${l?.sets[j]?.r??'عدات'}" oninput="setV(${i},${j},'r',this.value)"></div><button class="b d" onclick="delSet(${i},${j})">−</button></div>`).join('')}
+ <button class="b g" onclick="addSet(${i})">+ مجموعة</button> <button class="b g" onclick="restT(60)">⏱ 60</button><button class="b g" onclick="restT(90)">⏱ 90</button><button class="b g" onclick="restT(120)">⏱ 120</button></div>`}
+function badge(e,i){const l=hist(e.id,logDate),b=best(e.sets);if(!l||!b)return'—';const p=best(l.sets);return b>p?`▲ +${+(b-p).toFixed(2)} كجم`:b==p?'= نفس الوزن':`▼ ${+(p-b).toFixed(2)}`}
+function setBadge(i){const el=$('#bd'+i),e=S.w[logDate].exs[i],b=badge(e,i);el.textContent=T(b);if(b[0]=='▲'&&!el.dataset.u){el.dataset.u=1;spark(el)}el.className='chip '+(b[0]=='▲'?'up':b[0]=='='?'eq':'')}
+function setV(i,j,k,v){S.w[logDate].exs[i].sets[j][k]=v;save();if(k=='w')setBadge(i)}
+function addSet(i){const s=S.w[logDate].exs[i].sets,l=s[s.length-1]||hist(S.w[logDate].exs[i].id,logDate)?.sets[0]||{w:'',r:''};s.push({w:l.w,r:l.r});save();render()}
+function delSet(i,j){S.w[logDate].exs[i].sets.splice(j,1);save();render()}
+function delEx(i){S.w[logDate].exs.splice(i,1);save();render()}
+function addEx(){const id=getEx($('#newEx').value);if(!id)return;const l=hist(id,logDate);S.w[logDate].exs.push({id,sets:l?l.sets.map(s=>({w:s.w,r:s.r})):[{w:'',r:''}]});save();render()}
+function newW(){S.w[logDate]={type:'',exs:[]};save();render()}
+function delW(){if(confirm(T('تمسح تمرين اليوم ده؟'))){delete S.w[logDate];save();render()}}
+function shiftLog(n){logDate=addD(logDate,n);render()}
+function startPlan(d){const p=S.p[d];logDate=d;S.w[d]=S.w[d]||{type:p.type,exs:p.exs.filter(i=>S.ex[i]).map(id=>{const l=hist(id,d);return{id,sets:l?l.sets.map(s=>({w:s.w,r:s.r})):[{w:'',r:''}]}})};save();tab='log';render();toast('اتحمّل البلان 💪')}
+/* PLAN */
+function plan(){
+ const ds=[...Array(7)].map((_,i)=>addD(wkStart,i));
+ return `<h2>البلانر</h2><div class="row" style="margin:10px 0 16px"><button class="b g" onclick="wkStart=addD(wkStart,-7);render()">›</button><b class="num">${ds[0].slice(5)} → ${ds[6].slice(5)}</b><button class="b g" onclick="wkStart=addD(wkStart,7);render()">‹</button><button class="b g" onclick="wkStart=addD('${TODAY}',-((new Date().getDay()+1)%7));render()">الأسبوع ده</button></div>
+ <div class="days">${ds.map((d,i)=>{const p=S.p[d];return `<div class="card day ${d==TODAY?'today':''} ${S.w[d]?.exs.length?'done':''}" style="animation:pgIn .5s ${i*80}ms both"><div class="dn">${+d.slice(8)}</div><div class="sub" style="margin:0 0 8px">${DN[fromIso(d).getDay()]}</div>
+ ${p?`<b>${esc(p.type||'تمرين')}</b>${p.exs.map(x=>`<div class="pl">${esc(S.ex[x]?.name)}</div>`).join('')}<div class="row" style="margin-top:10px"><button class="b" onclick="startPlan('${d}')">ابدأ</button><button class="b g" onclick="editPlan('${d}')">عدّل</button><button class="b g" title="📋 انسخ يوم" onclick="cpM('p','${d}')">📋</button><button class="b d" onclick="delPlan('${d}')">🗑</button></div>`:`<button class="b g" onclick="editPlan('${d}')">+ خطط اليوم</button>`}</div>`}).join('')}</div>`}
+let pd,psel=[];
+function editPlan(d){pd=d;psel=[...(S.p[d]?.exs||[])];planModal()}
+function planModal(){const t=$('#pt')?.value??S.p[pd]?.type??'';
+ openM(`<h2>${fmtD(pd)}</h2><div class="fld"><label>نوع التمرين</label><input id="pt" value="${esc(t)}" placeholder="Push / Legs / ..."></div><div class="fld"><label>اختار التمارين (دوس تاني للإزالة)</label><div class="pick">${Object.entries(S.ex).map(([id,x])=>`<span class="${psel.includes(id)?'on':''}" onclick="togP('${id}')">${esc(x.name)}</span>`).join('')||'<small>مفيش تمارين لسه، أضف من تحت</small>'}</div></div>
+ <div class="fld row"><input id="pn" placeholder="تمرين جديد..." style="flex:1" onkeydown="if(event.key=='Enter')addP()"><button class="b g" onclick="addP()">+</button></div>
+ <div class="row"><button class="b" onclick="savePlan()">حفظ</button><button class="b g" onclick="closeM()">إلغاء</button></div>`)}
+function togP(id){const t=$('#pt').value;psel=psel.includes(id)?psel.filter(x=>x!=id):[...psel,id];planModal();$('#pt').value=t}
+function addP(){const id=getEx($('#pn').value);if(!id)return;const t=$('#pt').value;if(!psel.includes(id))psel.push(id);save();planModal();$('#pt').value=t}
+function savePlan(){S.p[pd]={type:$('#pt').value,exs:psel};save();closeM();render();toast('اتحفظ ✓')}
+function delPlan(d){delete S.p[d];save();render()}
+/* LIB */
+function lib(){const ids=Object.keys(S.ex);
+ return `<div class="row" style="justify-content:space-between"><div><h2>التمارين</h2><p class="sub">كل تمرين ممكن تضيف له وصف ولينك وصورة (اختياري)</p></div><button class="b" onclick="editEx()">+ تمرين جديد</button></div>
+ ${ids.length?`<div class="lib">${ids.map((id,i)=>{const x=S.ex[id],b=allBest(id);return `<div class="card" style="animation:pgIn .5s ${i*60}ms both"><div class="im" style="${x.img?`background-image:url(${x.img})`:''}">${x.img?'':'🏋️'}</div><b style="font-size:17px">${esc(x.name)}</b><p class="sub" style="margin:0 0 8px;font-size:13px">${esc(x.desc.slice(0,70))}</p><div class="chip num" style="display:inline-block">PR ${b||'—'} kg</div><div class="row" style="margin-top:10px"><button class="b g" onclick="info('${id}')">تفاصيل</button><button class="b g" onclick="editEx('${id}')">عدّل</button><button class="b d" onclick="delExLib('${id}')">🗑</button></div></div>`}).join('')}</div>`:'<div class="card empty"><div class="em">📚</div>ضيف أول تمرين</div>'}`}
+let eid,eimg='';
+function editEx(id){eid=id;const x=S.ex[id]||{name:'',desc:'',link:'',img:''};eimg=x.img;
+ openM(`<h2>${id?'تعديل':'إضافة تمرين'}</h2><div class="fld"><label>الاسم</label><input id="en" value="${esc(x.name)}"></div><div class="fld"><label>وصف (اختياري)</label><textarea id="ed" rows="3">${esc(x.desc)}</textarea></div><div class="fld"><label>لينك فيديو/شرح (اختياري)</label><input id="el" dir="ltr" value="${esc(x.link)}" placeholder="https://"></div><div class="fld"><label>صورة (اختياري)</label><input type="file" accept="image/*" onchange="pickImg(this)"><div id="ip" class="im" style="height:90px;margin-top:8px;border-radius:12px;background:var(--sf2) center/cover ${eimg?`url(${eimg})`:''}"></div></div>
+ <div class="row"><button class="b" onclick="saveEx()">حفظ</button><button class="b g" onclick="eimg='';$('#ip').style.backgroundImage=''">شيل الصورة</button><button class="b g" onclick="closeM()">إلغاء</button></div>`)}
+function pickImg(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,480/im.width),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);eimg=c.toDataURL('image/jpeg',.7);$('#ip').style.backgroundImage=`url(${eimg})`};im.src=r.result};r.readAsDataURL(f)}
+function saveEx(){const n=$('#en').value.trim();if(!n)return toast('اكتب اسم التمرين');const id=eid||uid();S.ex[id]={name:n,desc:$('#ed').value,link:$('#el').value.trim(),img:eimg};save();closeM();render();toast('اتحفظ ✓')}
+function delExLib(id){if(!confirm(T('تمسح التمرين؟ هيتشال من الأيام والبلانات كمان')))return;delete S.ex[id];for(const d in S.w)S.w[d].exs=S.w[d].exs.filter(e=>e.id!=id);for(const d in S.p)S.p[d].exs=S.p[d].exs.filter(e=>e!=id);save();render()}
+function info(id){const x=S.ex[id];if(!x)return;
+ const pts=Object.keys(S.w).sort().map(d=>{const e=S.w[d].exs.find(e=>e.id==id);return e&&best(e.sets)?[d,best(e.sets)]:null}).filter(Boolean);
+ let ch='<p class="sub">لسه مفيش بيانات للرسم</p>';
+ if(pts.length){const mx=Math.max(...pts.map(p=>p[1])),mn=Math.min(...pts.map(p=>p[1])),W=440,H=140,X=i=>pts.length>1?20+i*(W-40)/(pts.length-1):W/2,Y=v=>mx==mn?H/2:H-20-(v-mn)/(mx-mn)*(H-40);
+  const path=pts.map((p,i)=>(i?'L':'M')+X(i)+' '+Y(p[1])).join(' ');
+  ch=`<svg viewBox="0 0 ${W} ${H}" style="width:100%"><path d="${path}" fill="none" stroke="var(--ac)" stroke-width="3" stroke-linecap="round" pathLength="1" stroke-dasharray="1" style="animation:dr 1.4s ease both"/>${pts.map((p,i)=>`<circle cx="${X(i)}" cy="${Y(p[1])}" r="5" fill="var(--am)"><title>${p[0]}: ${p[1]} kg</title></circle><text x="${X(i)}" y="${Y(p[1])-10}" text-anchor="middle" font-size="11" fill="var(--tx)" font-family="Chakra Petch">${p[1]}</text>`).join('')}</svg><style>@keyframes dr{from{stroke-dashoffset:1}}
+.seg{margin:10px 0 14px}
+.fgrid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));max-height:290px;overflow:auto;margin:10px 0;padding:2px}
+.fc{background:var(--sf2);padding:8px 10px;cursor:pointer;border-inline-start:3px solid transparent;transition:.2s;display:flex;flex-direction:column;gap:2px}
+.fc:hover{border-color:var(--cy)}.fc.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,var(--sf2))}
+.fc small{color:var(--mu);font-size:11px}.fc .num{color:var(--cy);font-size:12px}
+.wg{display:flex;gap:6px;flex-wrap:wrap}.wg i{width:26px;height:34px;border:3px solid var(--cy);border-radius:2px 2px 9px 9px;cursor:pointer;transition:.2s}.wg i.on{background:var(--cy);transform:translateY(-3px)}
+.plt{flex:none}.nstrip{cursor:pointer;display:inline-block;margin:0 0 12px}
+</style>`}
+ const safe=/^https?:\/\//i.test(x.link);
+ openM(`${x.img?`<div class="im" style="height:180px;border-radius:16px;background:center/cover url(${x.img});margin-bottom:12px"></div>`:''}<h2>${esc(x.name)}</h2>${x.desc?`<p class="sub">${esc(x.desc)}</p>`:''}${safe?`<p><a href="${esc(x.link)}" target="_blank" rel="noopener" style="color:var(--cy)">🔗 فتح اللينك</a></p>`:''}<div class="sec">تطور أعلى وزن</div>${ch}<div class="row" style="margin-top:12px"><button class="b g" onclick="closeM();editEx('${id}')">عدّل</button><button class="b g" onclick="closeM()">إغلاق</button></div>`)}
+function openM(h){h=T(h);$('#mod').innerHTML=`<div class="ov" onclick="if(event.target==this)closeM()"><div class="md">${h}</div></div>`}
+function closeM(){$('#mod').innerHTML=''}
+let rt=null;
+function restT(s){clearInterval(rt);const end=Date.now()+s*1e3,C=119.4,f=()=>{const l=Math.max(0,Math.ceil((end-Date.now())/1e3));$('#rest').innerHTML=l?T(`<div class="rt"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19" fill="none" stroke="var(--sf2)" stroke-width="4"/><circle cx="22" cy="22" r="19" fill="none" stroke="var(--ac)" stroke-width="4" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-l/s)}" transform="rotate(-90 22 22)"/></svg><b class="num">${l}</b><span>راحة</span><button class="b d" onclick="stopRest()">✕</button></div>`):'';if(!l){clearInterval(rt);beep();toast('خلصت الراحة! كمل 💪')}};f();rt=setInterval(f,250)}
+function stopRest(){clearInterval(rt);$('#rest').innerHTML=''}
+Object.assign(E,{"سمّي اليوم الأول وبعدين ضيف التمارين":"Name your day first, then add exercises","ابدأ اليوم":"Start day","اكتب اسم اليوم الأول":"Enter the day name first","📋 انسخ يوم":"📋 Copy day","انسخ اليوم لـ":"Copy this day to","التاريخ الجديد":"New date","انسخ":"Copy","اتنسخ ✓ — عدّل الأرقام":"Copied ✓ — adjust the numbers","اليوم ده فيه بيانات، تستبدلها؟":"That day already has data. Replace it?","📋 انسخ من يوم تاني":"📋 Copy from another day","اختار يوم تنسخه":"Pick a day to copy","مفيش أيام متسجلة لسه":"No logged days yet","⛓ + سوبر سيت":"⛓ + Superset","⛓ سوبر سيت":"⛓ SUPERSET","اربط مع التمرين اللي فوق":"Link with the exercise above","+ دروب سيت":"+ Drop set","علّم كدروب سيت":"Mark as drop set","⬇ تصدير":"⬇ Export","⬆ استيراد":"⬆ Import","نسخة احتياطية (JSON)":"Backup (JSON)","نزّل الملف":"Download file","انسخ النص":"Copy text","اتنسخ النص ✓":"Text copied ✓","استيراد البيانات":"Import data","اختار ملف JSON أو الصق النص هنا":"Pick a JSON file or paste the text here","استبدل الكل":"Replace all","ادمج":"Merge","تمام، الداتا اتحمّلت ✓":"Data imported ✓","الملف مش صالح":"Invalid file","تستبدل كل بياناتك الحالية؟":"Replace all your current data?","اتحفظ الملف ✓":"File saved ✓","الحفظ مش متاح هنا، انسخ النص":"Saving is not available here, copy the text instead","احفظ الملف ده في مكان آمن، وبعدها استورده في أي متصفح جديد":"Keep this file somewhere safe, then import it in any new browser"});
+KEYS.length=0;KEYS.push(...Object.keys(E).sort((a,b)=>b.length-a.length));
+const TYPES=['Push','Pull','Legs','Upper','Lower','Full Body','Chest','Back','Shoulders','Arms'];
+const cl=o=>JSON.parse(JSON.stringify(o));
+function log(){
+ const w=S.w[logDate];
+ let h=`<h2>تمرين اليوم</h2><div class="row" style="margin:10px 0 16px"><button class="b g" onclick="shiftLog(-1)">›</button><input type="date" value="${logDate}" onchange="logDate=this.value;render()" style="max-width:170px"><button class="b g" onclick="shiftLog(1)">‹</button><span class="sub" style="margin:0">${fmtD(logDate)}</span></div>`;
+ if(!w){const p=S.p[logDate];return h+`<div class="card"><p class="qt" style="margin:0 0 10px;animation:none">سمّي اليوم الأول وبعدين ضيف التمارين</p><div class="row"><input id="dn" placeholder="اسم اليوم: Push / Pull / Legs..." style="flex:1;min-width:180px" onkeydown="if(event.key=='Enter')newW()"><button class="b" onclick="newW()">ابدأ اليوم</button></div><div class="pick" style="margin-top:12px">${TYPES.map(t=>`<span onclick="$('#dn').value='${t}';$('#dn').focus()">${t}</span>`).join('')}</div></div><div class="row" style="margin-top:14px">${p?`<button class="b g" onclick="startPlan('${logDate}')">ابدأ من البلان (${esc(p.type||'')})</button>`:''}<button class="b g" onclick="srcM()">📋 انسخ من يوم تاني</button></div>`}
+ h+=`<div class="card hero" style="padding:16px"><div class="row"><input class="dnm" value="${esc(w.type)}" placeholder="اسم اليوم: Push / Pull / Legs..." oninput="S.w[logDate].type=this.value;save()"><button class="b g" onclick="cpM('w',logDate)">📋 انسخ يوم</button><button class="b d" onclick="delW()">🗑 مسح اليوم</button></div><p class="sub" style="margin:8px 0 0">الحجم الكلي: <b class="num">${vol(w).toLocaleString('en')} kg</b></p></div>`;
+ h+=w.exs.map((e,i)=>exCard(e,i)).join('');
+ h+=`<div class="card"><div class="row"><input id="newEx" list="exl" placeholder="أضف تمرين (اكتب اسم جديد أو اختار)" style="flex:1;min-width:180px" onkeydown="if(event.key=='Enter')addEx()"><datalist id="exl">${Object.values(S.ex).map(x=>`<option>${esc(x.name)}</option>`).join('')}</datalist><button class="b" onclick="addEx()">+ أضف</button>${w.exs.length?'<button class="b g" onclick="addEx(1)">⛓ + سوبر سيت</button>':''}</div></div>`;return h}
+function exCard(e,i){
+ const x=S.ex[e.id]||{name:'?'},l=hist(e.id,logDate),nx=S.w[logDate].exs[i+1]&&S.w[logDate].exs[i+1].ss;
+ return `<div class="card ex ${e.ss?'ssb':''} ${nx?'ssa':''} ${e.ss||nx?'ss':''}" style="animation-delay:${i*70}ms">${e.ss?'<div class="ssl">⛓ سوبر سيت</div>':''}<div class="exh"><b onclick="info('${e.id}')">${esc(x.name)}</b><span class="chip" id="bd${i}">${badge(e,i)}</span>${i?`<button class="b d ${e.ss?'on':''}" title="اربط مع التمرين اللي فوق" onclick="togSS(${i})">⛓</button>`:''}<button class="b d" onclick="info('${e.id}')">ℹ</button><button class="b d" onclick="delEx(${i})">✕</button></div>
+ <div class="chip" style="display:inline-block;margin-bottom:8px">${l?`آخر مرة ${fmtD(l.date)}: <span class="num">${l.sets.map(s=>s.w+'×'+s.r+(s.d?'↓':'')).join(' · ')}</span>`:'أول مرة تلعبه ✨'}</div>
+ ${e.sets.map((s,j)=>`<div class="set ${s.d?'dp':''}"><div class="n">${s.d?'↓':j+1}</div><div><input type="number" inputmode="decimal" min="0" step="any" value="${s.w}" placeholder="${l?.sets[j]?.w??'كجم'}" oninput="setV(${i},${j},'w',this.value)"></div><div><input type="number" inputmode="numeric" min="0" value="${s.r}" placeholder="${l?.sets[j]?.r??'عدات'}" oninput="setV(${i},${j},'r',this.value)"></div><button class="b d ${s.d?'on':''}" title="علّم كدروب سيت" onclick="togDrop(${i},${j})">⬇</button><button class="b d" onclick="delSet(${i},${j})">−</button></div>`).join('')}
+ <div class="row"><button class="b g" onclick="addSet(${i})">+ مجموعة</button><button class="b g" onclick="addSet(${i},1)">+ دروب سيت</button><button class="b g" onclick="restT(60)">⏱ 60</button><button class="b g" onclick="restT(90)">⏱ 90</button><button class="b g" onclick="restT(120)">⏱ 120</button></div></div>`}
+function addSet(i,dr){const e=S.w[logDate].exs[i],l=e.sets[e.sets.length-1]||(hist(e.id,logDate)||{sets:[]}).sets[0]||{w:'',r:''};e.sets.push({w:dr&&l.w!==''?Math.round(l.w*.8*2)/2:l.w,r:l.r,d:!!dr});save();render()}
+function togDrop(i,j){const s=S.w[logDate].exs[i].sets[j];s.d=!s.d;save();render()}
+function togSS(i){const e=S.w[logDate].exs[i];e.ss=!e.ss;save();render()}
+function delEx(i){const ex=S.w[logDate].exs;ex.splice(i,1);if(ex[0])ex[0].ss=false;save();render()}
+function addEx(ss){const id=getEx($('#newEx').value);if(!id)return;const ex=S.w[logDate].exs,l=hist(id,logDate);ex.push({id,ss:!!ss&&ex.length>0,sets:l?l.sets.map(s=>({w:s.w,r:s.r,d:!!s.d})):[{w:'',r:''}]});save();render()}
+function newW(){const n=$('#dn').value.trim();if(!n)return toast('اكتب اسم اليوم الأول');S.w[logDate]={type:n,exs:[]};save();render()}
+let cpK,cpS;
+function cpM(k,src){cpK=k;cpS=src;openM(`<h2>انسخ اليوم لـ</h2><div class="fld"><label>التاريخ الجديد</label><input type="date" id="cd" value="${addD(src,7)}"></div><div class="row"><button class="b" onclick="doCp()">انسخ</button><button class="b g" onclick="closeM()">إلغاء</button></div>`)}
+function doCp(){const t=$('#cd').value;if(!t||t==cpS)return;if(S[cpK][t]&&!confirm(T('اليوم ده فيه بيانات، تستبدلها؟')))return;S[cpK][t]=cl(S[cpK][cpS]);save();closeM();if(cpK=='w'){logDate=t;tab='log'}else wkStart=addD(t,-((fromIso(t).getDay()+1)%7));render();toast('اتنسخ ✓ — عدّل الأرقام')}
+function srcM(){const ds=Object.keys(S.w).filter(d=>d!=logDate).sort().reverse().slice(0,10);openM(`<h2>اختار يوم تنسخه</h2>${ds.length?ds.map(d=>`<div class="tr" style="cursor:pointer" onclick="pickSrc('${d}')"><span>${fmtD(d)} — ${esc(S.w[d].type||'')}</span><span class="num">${vol(S.w[d]).toLocaleString('en')} kg</span></div>`).join(''):'<p class="sub">مفيش أيام متسجلة لسه</p>'}<button class="b g" style="margin-top:12px" onclick="closeM()">إلغاء</button>`)}
+function pickSrc(d){S.w[logDate]=cl(S.w[d]);save();closeM();render();toast('اتنسخ ✓ — عدّل الأرقام')}
+const bk=()=>JSON.stringify({app:'plate',v:1,data:S});
+function expM(){openM(`<h2>نسخة احتياطية (JSON)</h2><p class="sub">احفظ الملف ده في مكان آمن، وبعدها استورده في أي متصفح جديد</p><textarea id="xj" rows="6" readonly dir="ltr" style="font:12px monospace">${esc(bk())}</textarea><div class="row" style="margin-top:12px"><button class="b" onclick="dlJ()">نزّل الملف</button><button class="b g" onclick="cpJ()">انسخ النص</button><button class="b g" onclick="closeM()">إغلاق</button></div>`)}
+async function dlJ(){try{const d=window.claude&&await claude.use('downloads');if(!d)return toast('الحفظ مش متاح هنا، انسخ النص');await d.save({filename:'plate-backup-'+TODAY+'.json',data:bk()});toast('اتحفظ الملف ✓')}catch(e){if(!e||e.code!='declined')toast('الحفظ مش متاح هنا، انسخ النص')}}
+function cpJ(){const t=$('#xj');t.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}if(!ok&&navigator.clipboard)navigator.clipboard.writeText(t.value).catch(()=>{});toast('اتنسخ النص ✓')}
+function impM(){openM(`<h2>استيراد البيانات</h2><p class="sub">اختار ملف JSON أو الصق النص هنا</p><input type="file" accept=".json,application/json" onchange="impFile(this)"><textarea id="ij" rows="5" dir="ltr" style="margin:10px 0;font:12px monospace"></textarea><div class="row"><button class="b" onclick="doImp(0)">استبدل الكل</button><button class="b g" onclick="doImp(1)">ادمج</button><button class="b g" onclick="closeM()">إلغاء</button></div>`)}
+const MU={chest:'صدر',back:'ضهر',shoulders:'أكتاف',biceps:'بايسبس',triceps:'ترايسبس',forearms:'ساعد',quads:'رجل أمامية',hams:'رجل خلفية',glutes:'جلوتس',calves:'سمانة',abs:'بطن',traps:'ترابيس',full:'جسم كامل',cardio:'كارديو'};
+const PT={biceps:['الرأس القصير','الرأس الطويل','العضلة العضدية'],triceps:['الرأس الطويل','الرأس الجانبي','الرأس الإنسي'],chest:['الصدر العلوي','الصدر الأوسط','الصدر السفلي'],back:['اللاتس','أعلى الضهر','أسفل الضهر','سمك الضهر','عرض الضهر'],shoulders:['الأمامي','الجانبي','الخلفي'],quads:['الجزء الداخلي','الجزء الخارجي'],calves:['الغاستروكنيميوس','السولية'],abs:['البطن العلوية','البطن السفلية','الجوانب']};
+Object.assign(E,{"صدر":"Chest","ضهر":"Back","أكتاف":"Shoulders","بايسبس":"Biceps","ترايسبس":"Triceps","ساعد":"Forearms","رجل أمامية":"Quads","رجل خلفية":"Hamstrings","جلوتس":"Glutes","سمانة":"Calves","بطن":"Abs","ترابيس":"Traps","جسم كامل":"Full body","كارديو":"Cardio","الرأس القصير":"Short head","الرأس الطويل":"Long head","العضلة العضدية":"Brachialis","الرأس الجانبي":"Lateral head","الرأس الإنسي":"Medial head","الصدر العلوي":"Upper chest","الصدر الأوسط":"Mid chest","الصدر السفلي":"Lower chest","اللاتس":"Lats","أعلى الضهر":"Upper back","أسفل الضهر":"Lower back","سمك الضهر":"Back thickness","عرض الضهر":"Back width","الأمامي":"Front delt","الجانبي":"Side delt","الخلفي":"Rear delt","الجزء الداخلي":"Inner (VMO)","الجزء الخارجي":"Outer sweep","الغاستروكنيميوس":"Gastrocnemius","السولية":"Soleus","البطن العلوية":"Upper abs","البطن السفلية":"Lower abs","الجوانب":"Obliques","— العضلة —":"— Muscle —","الجزء (اختياري)":"Part (optional)","المجموعات لكل عضلة آخر 7 أيام":"Sets per muscle, last 7 days","حدد العضلة في تمارينك عشان تظهر هنا":"Pick a muscle on your exercises to see it here"});
+KEYS.length=0;KEYS.push(...Object.keys(E).sort((a,b)=>b.length-a.length));
+const eM=e=>e.m!==undefined?e.m:(S.ex[e.id]||{}).m||'',eP=e=>e.p!==undefined?e.p:(S.ex[e.id]||{}).p||'';
+const _ec=exCard;
+exCard=(e,i)=>{const m=eM(e),p=eP(e),r=`<div class="row mrow"><select onchange="setMu(${i},this.value)"><option value="">— العضلة —</option>${Object.entries(MU).map(([k,v])=>`<option value="${k}" ${k==m?'selected':''}>${v}</option>`).join('')}</select><input list="pt${i}" placeholder="الجزء (اختياري)" value="${esc(p)}" oninput="setPart(${i},this.value)"><datalist id="pt${i}">${(PT[m]||[]).map(x=>`<option value="${x}">`).join('')}</datalist></div>`;return _ec(e,i).replace('<div class="chip" style="display:inline-block;margin-bottom:8px">',r+'<div class="chip" style="display:inline-block;margin-bottom:8px">')};
+function setMu(i,v){const e=S.w[logDate].exs[i];e.m=v;e.p='';const x=S.ex[e.id];if(x){x.m=v;x.p=''}save();render()}
+function setPart(i,v){const e=S.w[logDate].exs[i];e.p=v;const x=S.ex[e.id];if(x)x.p=v;save()}
+function muscleCard(){const c={},from=addD(TODAY,-7);for(const d in S.w){if(d<=from||d>TODAY)continue;S.w[d].exs.forEach(e=>{const m=eM(e);if(m)c[m]=(c[m]||0)+e.sets.length})}const en=Object.entries(c).sort((a,b)=>b[1]-a[1]),mx=Math.max(1,...en.map(x=>x[1]));return `<div class="sec">المجموعات لكل عضلة آخر 7 أيام</div><div class="card">${en.length?en.map(([k,n],i)=>`<div class="mb"><span>${MU[k]||esc(k)}</span><div><i style="width:${n/mx*100}%;animation-delay:${i*80}ms"></i></div><b class="num">${n}</b></div>`).join(''):'<div class="pl">حدد العضلة في تمارينك عشان تظهر هنا</div>'}</div>`}
+Object.assign(E,{"البروفايل":"Profile","أهلاً يا ":"Welcome back, ","عرّفنا بنفسك":"Tell us about you","ضيف اسمك وصورتك وبياناتك عشان الداشبورد تبقى ليك":"Add your name, photo and stats so the dashboard is yours","اعمل بروفايلك":"Create profile","العمر ":"Age ","بتتمرن بقالك ":"Training for ","سنة":"yr","شهر":"mo","أقل من شهر":"less than a month","بياناتك بتظهر في الداشبورد وبتتحفظ على جهازك":"Your stats show on the dashboard and are saved on your device","السن":"Age","بتتمرن من":"Training since","الوزن (كجم)":"Weight (kg)","الطول (سم)":"Height (cm)","الهدف":"Goal","اسمك":"Your name","تضخيم":"Bulk","تنشيف":"Cut","ثبات":"Maintain","قوة":"Strength","لياقة":"Fitness","آخر قياسات الوزن":"Recent weigh-ins","شيل الصورة الشخصية":"Remove photo","البيانات والنسخ الاحتياطي":"Data & backup","خد نسخة JSON من كل بياناتك، وبعدين استوردها في أي متصفح تاني":"Take a JSON copy of all your data, then import it in any other browser"});
+KEYS.length=0;KEYS.push(...Object.keys(E).sort((a,b)=>b.length-a.length));
+const okI=s=>/^data:image\/[a-z]+;base64,[A-Za-z0-9+\/=]+$/.test(s||'');
+function dur(s){if(!s)return'';const[y,m]=s.split('-').map(Number),n=new Date(),t=(n.getFullYear()-y)*12+n.getMonth()+1-m;if(!(t>=0))return'';const a=Math.floor(t/12),b=t%12;return[a?a+' سنة':'',b?b+' شهر':''].filter(Boolean).join(' · ')||'أقل من شهر'}
+function wDelta(p){const k=Object.keys(p.wh||{}).sort();return k.length>1?+(p.wh[k[k.length-1]]-p.wh[k[k.length-2]]).toFixed(1):0}
+function chips(p){const c=[];if(p.age)c.push('العمر '+p.age);const d=dur(p.since);if(d)c.push('بتتمرن بقالك '+d);if(p.wt){const dl=wDelta(p);c.push(p.wt+' kg'+(dl?' '+(dl>0?'▲':'▼')+Math.abs(dl):''))}if(p.ht)c.push(p.ht+' cm');if(p.wt&&p.ht>50)c.push('BMI '+(p.wt/Math.pow(p.ht/100,2)).toFixed(1));if(p.goal)c.push(esc(p.goal));return c.map(x=>`<span class="chip num">${x}</span>`).join('')}
+function profCard(){const p=S.pf||{};if(!p.name&&!p.img&&!p.age&&!p.wt&&!p.ht&&!p.since&&!p.goal)return`<div class="card pcard"><div class="av">🏋️</div><div class="pi"><b>عرّفنا بنفسك</b><p class="sub" style="margin:0">ضيف اسمك وصورتك وبياناتك عشان الداشبورد تبقى ليك</p></div><button class="b" onclick="go('prof')">اعمل بروفايلك</button></div>`;
+ return `<div class="card pcard"><div class="av" ${okI(p.img)?`style="background-image:url(${p.img})"`:''}>${okI(p.img)?'':esc((p.name||'🏋️').slice(0,1))}</div><div class="pi"><div class="pn">${esc(p.name||'')}</div><div class="pch">${chips(p)}</div></div><button class="b g" onclick="go('prof')">عدّل</button></div>`}
+function pfInfo(){const p=S.pf||{},ks=Object.keys(p.wh||{}).sort().reverse().slice(0,6);return`<div class="pch" style="margin-bottom:10px">${chips(p)}</div>${ks.length?`<div class="sub" style="margin:0 0 6px">آخر قياسات الوزن</div><div class="pch">${ks.map(k=>`<span class="chip num">${k.slice(5)}: ${p.wh[k]} kg</span>`).join('')}</div>`:''}`}
+function updPf(){const e=$('#pfx');if(e)e.innerHTML=T(pfInfo())}
+function pf(k,v){S.pf=S.pf||{};S.pf.wh=S.pf.wh||{};S.pf[k]=v;if(k=='wt'&&v!=='')S.pf.wh[TODAY]=+v;save();updPf()}
+function pickAv(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=240;c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,240,240);pf('img',c.toDataURL('image/jpeg',.8));render()};im.src=r.result};r.readAsDataURL(f)}
+function prof(){const p=S.pf||{};return`<h2>البروفايل</h2><p class="sub">بياناتك بتظهر في الداشبورد وبتتحفظ على جهازك</p>
+ <div class="card"><div class="row" style="gap:16px"><div class="av big" onclick="$('#af').click()" ${okI(p.img)?`style="background-image:url(${p.img})"`:''}>${okI(p.img)?'':'📷'}</div><input type="file" id="af" accept="image/*" hidden onchange="pickAv(this)">${okI(p.img)?'<button class="b d" onclick="pf(\'img\',\'\');render()">شيل الصورة الشخصية</button>':''}</div>
+ <div class="pf"><div><label class="sub">الاسم</label><input value="${esc(p.name)}" placeholder="اسمك" oninput="pf('name',this.value)"></div><div><label class="sub">السن</label><input type="number" min="10" max="99" value="${esc(p.age)}" oninput="pf('age',this.value)"></div><div><label class="sub">بتتمرن من</label><input type="month" value="${esc(p.since)}" max="${TODAY.slice(0,7)}" oninput="pf('since',this.value)" style="direction:ltr"></div><div><label class="sub">الوزن (كجم)</label><input type="number" step="any" value="${esc(p.wt)}" oninput="pf('wt',this.value)"></div><div><label class="sub">الطول (سم)</label><input type="number" value="${esc(p.ht)}" oninput="pf('ht',this.value)"></div><div><label class="sub">الهدف</label><input list="gl" value="${esc(p.goal)}" oninput="pf('goal',this.value)"><datalist id="gl"><option value="تضخيم"><option value="تنشيف"><option value="ثبات"><option value="قوة"><option value="لياقة"></datalist></div></div>
+ <div id="pfx">${pfInfo()}</div></div>
+ <div class="card" style="margin-top:14px"><b style="font-size:18px">البيانات والنسخ الاحتياطي</b><p class="sub" style="margin:4px 0 12px">خد نسخة JSON من كل بياناتك، وبعدين استوردها في أي متصفح تاني</p><div class="row"><button class="b" onclick="expM()">⬇ تصدير</button><button class="b g" onclick="impM()">⬆ استيراد</button></div></div>`}
+function impFile(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('#ij').value=r.result};r.readAsText(f)}
+function doImp(m){let o;try{o=JSON.parse($('#ij').value);o=o.data||o;if(typeof o.ex!='object'||typeof o.w!='object')throw 0}catch(e){return toast('الملف مش صالح')}o.p=o.p||{};if(!m){if(!confirm(T('تستبدل كل بياناتك الحالية؟')))return;S=o;S.n=S.n||{};S.cf=S.cf||[]}else{Object.assign(S.ex,o.ex);Object.assign(S.w,o.w);Object.assign(S.p,o.p);Object.assign(S.n=S.n||{},o.n||{});if(o.nt)S.nt=o.nt;S.cf=(S.cf||[]).concat((o.cf||[]).filter(x=>!(S.cf||[]).some(y=>y.n==x.n)));if(o.pf)S.pf=o.pf}save();closeM();render();toast('تمام، الداتا اتحمّلت ✓')}
+function beep(){try{const a=new AudioContext(),o=a.createOscillator();o.connect(a.destination);o.frequency.value=880;o.start();o.stop(a.currentTime+.4)}catch(e){}try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}}
+function spark(el){const r=el.getBoundingClientRect();for(let i=0;i<14;i++){const s=document.createElement('i'),a=Math.random()*6.28,d=40+Math.random()*50;s.className='sp';s.style.cssText=`left:${r.left+r.width/2}px;top:${r.top+r.height/2}px;--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px`;document.body.append(s);setTimeout(()=>s.remove(),900)}}
+document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}});
+try{if(sessionStorage.sp)$('#splash').remove();sessionStorage.sp=1}catch(e){}setTimeout(()=>{const s=$('#splash');s&&s.remove()},2600);
+render();
+Object.assign(E,{"تأكيد":"Confirm","اتقرى الملف ✓ — دوس استبدل أو ادمج":"File read ✓ — tap Replace all or Merge","مش قادر أنسخ — حدد النص يدوي وانسخه":"Couldn't copy — select the text and copy it manually"});
+KEYS.length=0;KEYS.push(...Object.keys(E).sort((a,b)=>b.length-a.length));
+function cf(m,fn){window._cf=fn;openM(`<h2>${m}</h2><div class="row"><button class="b" onclick="const f=window._cf;closeM();f()">تأكيد</button><button class="b g" onclick="closeM()">إلغاء</button></div>`)}
+function delW(){cf('تمسح تمرين اليوم ده؟',()=>{delete S.w[logDate];save();render()})}
+function delExLib(id){cf('تمسح التمرين؟ هيتشال من الأيام والبلانات كمان',()=>{delete S.ex[id];for(const d in S.w)S.w[d].exs=S.w[d].exs.filter(e=>e.id!=id);for(const d in S.p)S.p[d].exs=S.p[d].exs.filter(e=>e!=id);save();render()})}
+function doCp(){const t=$('#cd').value,k=cpK,s=cpS;if(!t||t==s)return;const go=()=>{S[k][t]=cl(S[k][s]);save();closeM();if(k=='w'){logDate=t;tab='log'}else wkStart=addD(t,-((fromIso(t).getDay()+1)%7));render();toast('اتنسخ ✓ — عدّل الأرقام')};S[k][t]?cf('اليوم ده فيه بيانات، تستبدلها؟',go):go()}
+function expM(){openM(`<h2>نسخة احتياطية (JSON)</h2><p class="sub">احفظ الملف ده في مكان آمن، وبعدها استورده في أي متصفح جديد</p><textarea id="xj" rows="6" readonly dir="ltr" onclick="this.select()" style="font:12px monospace">${esc(bk())}</textarea><div class="row" style="margin-top:12px"><button class="b" onclick="dlJ()">نزّل الملف</button><button class="b g" onclick="cpJ()">انسخ النص</button><button class="b g" onclick="closeM()">إغلاق</button></div>`)}
+async function dlJ(){const f=()=>{toast('الحفظ مش متاح هنا، انسخ النص');const t=$('#xj');t&&t.select()};try{const d=window.claude&&await claude.use('downloads');if(!d)return f();await d.save({filename:'plate-backup-'+TODAY+'.json',data:bk()});toast('اتحفظ الملف ✓')}catch(e){if(!e||e.code!='declined')f()}}
+async function cpJ(){const t=$('#xj');let ok=false;try{await navigator.clipboard.writeText(t.value);ok=true}catch(e){}if(!ok){try{t.focus();t.select();ok=document.execCommand('copy')}catch(e){}}toast(ok?'اتنسخ النص ✓':'مش قادر أنسخ — حدد النص يدوي وانسخه');if(!ok)t.select()}
+function impM(){openM(`<h2>استيراد البيانات</h2><p class="sub">اختار ملف JSON أو الصق النص هنا</p><input type="file" onchange="impFile(this)"><textarea id="ij" rows="5" dir="ltr" style="margin:10px 0;font:12px monospace"></textarea><div class="row"><button class="b" onclick="doImp(0)">استبدل الكل</button><button class="b g" onclick="doImp(1)">ادمج</button><button class="b g" onclick="closeM()">إلغاء</button></div>`)}
+function impFile(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('#ij').value=r.result;toast('اتقرى الملف ✓ — دوس استبدل أو ادمج')};r.onerror=()=>toast('الملف مش صالح');r.readAsText(f)}
+function doImp(m){let o;try{o=JSON.parse($('#ij').value.trim());o=o.data||o;if(!o||typeof o.ex!='object'||typeof o.w!='object')throw 0}catch(e){return toast('الملف مش صالح')}o.p=o.p||{};const go=()=>{if(!m){S=o;S.n=S.n||{};S.cf=S.cf||[]}else{Object.assign(S.ex,o.ex);Object.assign(S.w,o.w);Object.assign(S.p,o.p);Object.assign(S.n=S.n||{},o.n||{});if(o.nt)S.nt=o.nt;S.cf=(S.cf||[]).concat((o.cf||[]).filter(x=>!(S.cf||[]).some(y=>y.n==x.n)));if(o.pf)S.pf=o.pf}save();closeM();render();toast('تمام، الداتا اتحمّلت ✓')};m?go():cf('تستبدل كل بياناتك الحالية؟',go)}
+render();
+Object.assign(E,{"لو التحميل ما بدأش، انسخ النص (":"If the download did not start, copy the text ("});
+KEYS.length=0;KEYS.push(...Object.keys(E).sort((a,b)=>b.length-a.length));
+async function dlJ(){const j=bk(),fn='plate-backup-'+TODAY+'.json';let why='';
+ try{const d=window.claude&&await claude.use('downloads');if(d){await d.save({filename:fn,data:j});return toast('اتحفظ الملف ✓')}why='no-capability'}catch(e){if(e&&e.code=='declined')return;why=(e&&(e.code||e.message))||'error'}
+ try{const f=new File([j],fn,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}}catch(e){if(e&&e.name=='AbortError')return}
+ try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([j],{type:'application/json'}));a.download=fn;document.body.append(a);a.click();a.remove()}catch(e){}
+ const t=$('#xj');t&&t.select();toast('لو التحميل ما بدأش، انسخ النص ('+why+')')}
+
+/* ===== PLATE x NUTRITION ===== */
+S.n=S.n||{};S.cf=S.cf||[];
+const FOODS=[
+  {n:"Indomie instant noodles",c:"Grains",u:"pack",cal:250,p:6,cb:40,f:8},
+  {n:"White rice",c:"Grains",u:"g",cal:1.3,p:.027,cb:.28,f:.003},
+  {n:"Brown rice",c:"Grains",u:"g",cal:1.11,p:.026,cb:.23,f:.009},
+  {n:"Oats (dry)",c:"Grains",u:"cup",cal:307,p:11,cb:55,f:5},
+  {n:"Bread",c:"Grains",u:"slice",cal:79,p:2.7,cb:15,f:1},
+  {n:"Toast",c:"Grains",u:"slice",cal:85,p:3,cb:16,f:1.1},
+  {n:"Pasta (cooked)",c:"Grains",u:"g",cal:1.31,p:.05,cb:.25,f:.011},
+  {n:"Pita bread",c:"Grains",u:"piece",cal:165,p:5.5,cb:33,f:1},
+  {n:"Cornflakes",c:"Grains",u:"cup",cal:101,p:2,cb:24,f:.2},
+  {n:"Egg",c:"Protein",u:"egg",cal:78,p:6,cb:.6,f:5},
+  {n:"Egg white",c:"Protein",u:"egg white",cal:17,p:3.6,cb:.2,f:0},
+  {n:"Chicken thigh",c:"Protein",u:"thigh ~120g",cal:209,p:26,cb:0,f:11},
+  {n:"Chicken breast",c:"Protein",u:"g",cal:1.65,p:.31,cb:0,f:.036},
+  {n:"Tuna (canned)",c:"Protein",u:"g",cal:1.16,p:.26,cb:0,f:.01},
+  {n:"Minced beef",c:"Protein",u:"g",cal:2.15,p:.178,cb:0,f:.15},
+  {n:"Beef steak",c:"Protein",u:"g",cal:2.71,p:.26,cb:0,f:.18},
+  {n:"Sausage",c:"Protein",u:"piece ~50g",cal:150,p:7,cb:2,f:13},
+  {n:"Burger patty",c:"Protein",u:"patty ~100g",cal:295,p:19,cb:0,f:24},
+  {n:"Shrimp",c:"Protein",u:"g",cal:.99,p:.24,cb:0,f:.014},
+  {n:"Salmon",c:"Protein",u:"g",cal:2.08,p:.2,cb:0,f:.13},
+  {n:"Turkey breast",c:"Protein",u:"g",cal:1.35,p:.29,cb:0,f:.01},
+  {n:"Sardines",c:"Protein",u:"g",cal:2.08,p:.245,cb:0,f:.113},
+  {n:"Milk (whole)",c:"Dairy",u:"ml",cal:.61,p:.032,cb:.048,f:.033},
+  {n:"Milk (low-fat)",c:"Dairy",u:"ml",cal:.42,p:.034,cb:.049,f:.01},
+  {n:"Greek yogurt",c:"Dairy",u:"g",cal:.59,p:.10,cb:.036,f:.005},
+  {n:"Cheese slice",c:"Dairy",u:"slice ~20g",cal:70,p:4.5,cb:.4,f:5.6},
+  {n:"Cheese (tbsp)",c:"Dairy",u:"tbsp",cal:35,p:2.5,cb:.5,f:2.8},
+  {n:"Butter",c:"Dairy",u:"tbsp",cal:102,p:.1,cb:0,f:11.5},
+  {n:"Peanut butter",c:"Fats",u:"tbsp",cal:94,p:4,cb:3.1,f:8},
+  {n:"Peanuts",c:"Fats",u:"g",cal:5.67,p:.255,cb:.161,f:.493},
+  {n:"Almond butter",c:"Fats",u:"tbsp",cal:98,p:3.4,cb:3,f:9},
+  {n:"Olive oil",c:"Fats",u:"tbsp",cal:119,p:0,cb:0,f:13.5},
+  {n:"Avocado",c:"Fats",u:"half ~70g",cal:114,p:1.4,cb:6,f:10.5},
+  {n:"Walnuts",c:"Fats",u:"g",cal:6.54,p:.152,cb:.138,f:.654},
+  {n:"Almonds",c:"Fats",u:"g",cal:5.79,p:.213,cb:.215,f:.499},
+  {n:"Banana",c:"Fruit",u:"medium",cal:89,p:1.1,cb:23,f:.3},
+  {n:"Apple",c:"Fruit",u:"medium",cal:95,p:.5,cb:25,f:.3},
+  {n:"Orange",c:"Fruit",u:"medium",cal:62,p:1.2,cb:15,f:.2},
+  {n:"Dates",c:"Fruit",u:"piece",cal:23,p:.2,cb:6.2,f:0},
+  {n:"Mango",c:"Fruit",u:"g",cal:.6,p:.008,cb:.15,f:.004},
+  {n:"Strawberries",c:"Fruit",u:"g",cal:.32,p:.007,cb:.077,f:.003},
+  {n:"French fries",c:"Snacks",u:"g",cal:3.12,p:.037,cb:.41,f:.15},
+  {n:"Potato chips",c:"Snacks",u:"g",cal:5.36,p:.07,cb:.53,f:.35},
+  {n:"Dark chocolate",c:"Snacks",u:"g",cal:5.98,p:.077,cb:.46,f:.43},
+  {n:"Protein bar",c:"Snacks",u:"bar",cal:200,p:20,cb:22,f:7},
+  {n:"Granola bar",c:"Snacks",u:"bar",cal:190,p:3,cb:29,f:7},
+  {n:"Potato (boiled)",c:"Vegetables",u:"g",cal:.87,p:.018,cb:.2,f:.001},
+  {n:"Sweet potato",c:"Vegetables",u:"g",cal:.86,p:.016,cb:.2,f:.001},
+  {n:"Broccoli",c:"Vegetables",u:"g",cal:.34,p:.028,cb:.066,f:.004},
+  {n:"Spinach",c:"Vegetables",u:"g",cal:.23,p:.029,cb:.036,f:.004},
+  {n:"Tomato",c:"Vegetables",u:"medium",cal:22,p:1.1,cb:4.8,f:.2},
+  {n:"Cucumber",c:"Vegetables",u:"g",cal:.16,p:.007,cb:.038,f:.001},
+  {n:"Lentils (cooked)",c:"Legumes",u:"g",cal:1.16,p:.09,cb:.2,f:.004},
+  {n:"Chickpeas (cooked)",c:"Legumes",u:"g",cal:1.64,p:.086,cb:.27,f:.026},
+  {n:"Black beans",c:"Legumes",u:"g",cal:1.32,p:.09,cb:.24,f:.005},
+  {n:"Edamame",c:"Legumes",u:"g",cal:1.21,p:.113,cb:.89,f:.052},
+  {n:"Protein shake",c:"Drinks",u:"scoop ~30g",cal:120,p:24,cb:3,f:2},
+  {n:"Orange juice",c:"Drinks",u:"ml",cal:.45,p:.007,cb:.104,f:.002},
+];
+const NAR=["إندومي","رز أبيض","رز بني","شوفان","عيش","توست","مكرونة","عيش شامي","كورن فليكس","بيض","بياض بيض","وراك فراخ","صدور فراخ","تونة","لحمة مفرومة","ستيك","سجق","برجر","جمبري","سلمون","صدر رومي","سردين","لبن كامل الدسم","لبن قليل الدسم","زبادي يوناني","جبنة شرايح","جبنة (معلقة)","زبدة","زبدة فول سوداني","فول سوداني","زبدة لوز","زيت زيتون","أفوكادو","عين جمل","لوز","موز","تفاح","برتقال","تمر","مانجو","فراولة","بطاطس مقلية","شيبسي","شوكولاتة داكنة","بروتين بار","جرانولا بار","بطاطس مسلوقة","بطاطا","بروكلي","سبانخ","طماطم","خيار","عدس","حمص","فاصوليا سوداء","إيدامامي","بروتين شيك","عصير برتقال"];
+FOODS.forEach((f,i)=>f.a=NAR[i]);
+[['Ful medames','فول مدمس','Egypt','bowl ~200g',220,14,38,1],['Taameya','طعمية','Egypt','piece ~30g',70,3,7,3.5],['Koshari','كشري','Egypt','plate ~350g',550,15,100,10],['Baladi bread','عيش بلدي','Egypt','loaf ~100g',260,9,52,1.5],['Feteer meshaltet','فطير مشلتت','Egypt','slice ~100g',380,7,45,19],['Molokhia','ملوخية','Egypt','bowl ~200g',90,6,8,2],['Rice with vermicelli','رز بالشعرية','Egypt','cup ~160g',240,4.5,45,5],['Grilled kofta','كفتة مشوية','Egypt','g',2.5,.18,.03,.18],['Hawawshi','حواوشي','Egypt','piece',450,20,35,26],['Tahini','طحينة','Egypt','tbsp',89,2.6,3.2,8],['Halawa tahiniya','حلاوة طحينية','Egypt','g',4.9,.125,.5,.27],['Stuffed grape leaves','ورق عنب','Egypt','piece',30,.6,4.4,1],['Qarisha cheese','جبنة قريش','Dairy','g',.98,.11,.034,.043],['Labneh','لبنة','Dairy','tbsp',45,2,1.5,3.5],['Sugarcane juice','عصير قصب','Drinks','ml',.7,0,.18,0],['Soda','مياه غازية','Drinks','ml',.42,0,.105,0]].forEach(x=>FOODS.push({n:x[0],a:x[1],c:x[2],u:x[3],cal:x[4],p:x[5],cb:x[6],f:x[7]}));
+const nCA={All:'الكل',Egypt:'أكل مصري',Grains:'نشويات',Protein:'بروتين',Dairy:'ألبان',Fats:'دهون',Fruit:'فاكهة',Vegetables:'خضار',Legumes:'بقوليات',Snacks:'سناكس',Drinks:'مشروبات',Mine:'بتاعتي'};
+const nUA={g:'جم',ml:'مل',pack:'علبة',cup:'كوب',slice:'شريحة',piece:'قطعة',egg:'بيضة','egg white':'بياض بيضة',tbsp:'معلقة',bar:'لوح',medium:'حبة',thigh:'وركة',patty:'قرص',half:'نص حبة',scoop:'سكوب',bowl:'طبق',plate:'طبق',loaf:'رغيف',serving:'حصة'};
+const nM=[['b','فطار','🌅'],['l','غدا','☀️'],['d','عشا','🌙'],['s','سناك','🍎']],nDQ={'Egg':2,'Dates':3,'Oats (dry)':.5,'White rice':150,'Chicken breast':150},nIsG=f=>/^(g|ml)$/.test(f.u);
+const nAll=()=>FOODS.concat(S.cf||[]),nFn=f=>LANG=='en'?f.n:(f.a||f.n),nFu=u=>LANG=='en'?u:u.replace(/^[a-z ]+?(?= ~|$)/i,m=>nUA[m]||m),nFk=f=>f.cal>=1?Math.round(f.cal)+' kcal':Math.round(f.cal*100)+' kcal/100g';
+const nMd=()=>{const h=new Date().getHours();return h<11?'b':h<16?'l':h<21?'d':'s'};
+let nd=TODAY,nsub='log',ncat='All',nsr='',nsel=-1,nq=1,nm=nMd();
+const nDay=d=>S.n[d]||{it:[],wa:0},nTot=d=>nDay(d).it.reduce((a,x)=>({k:a.k+x.k,p:a.p+x.p,c:a.c+x.cb,f:a.f+x.f}),{k:0,p:0,c:0,f:0});
+const nW7=()=>Object.keys(S.w).filter(d=>d>addD(TODAY,-7)&&d<=TODAY&&S.w[d].exs.length).length,nActF=c=>c<1?1.2:c<3?1.375:c<5?1.55:c<7?1.725:1.9;
+const nGk=()=>({'تضخيم':'bulk','تنشيف':'cut'}[(S.pf||{}).goal]||'maintain');
+const nPa=()=>{const p=S.pf||{};return{age:+p.age,sx:p.sx,wt:+p.wt,ht:+p.ht,act:(!p.act||p.act=='auto')?nActF(nW7()):+p.act,goal:nGk()}},nOk=o=>o.age>9&&o.wt>25&&o.ht>99;
+const nCalc=o=>{const bmr=Math.round(10*o.wt+6.25*o.ht-5*o.age+(o.sx=='f'?-161:5)),t=Math.round(bmr*o.act);return{bmr,tdee:t,cut:t-500,maintain:t,bulk:t+300,bmi:o.wt/Math.pow(o.ht/100,2),pr:[Math.round(o.wt*1.8),Math.round(o.wt*2.2)]}};
+function nTgt(){if(S.nt)return S.nt;const o=nPa();return nOk(o)?{k:nCalc(o)[o.goal],p:Math.round(o.wt*2)}:{k:2200,p:120}}
+const nMac=g=>{const F=Math.round(g.k*.25/9);return{p:g.p,f:F,c:Math.max(0,Math.round((g.k-g.p*4-F*9)/4))}};
+function nStreak(){const g=nTgt();let n=0,c=nTot(TODAY).p>=g.p*.9?TODAY:addD(TODAY,-1);while(nTot(c).p>=g.p*.9&&n<400){n++;c=addD(c,-1)}return n}
+function nPlate(t,g,z){const C=t.p*4+t.c*4+t.f*9||1,L=g.k-t.k,pr=Math.min(1,t.k/g.k)*100;let o=0;const arcs=t.k?[[t.p*4,'var(--cy)'],[t.c*4,'var(--am)'],[t.f*9,'var(--ac)']].map(([v,c])=>{const l=Math.max(0,v/C*100-.8),r=`<circle r="47" cx="60" cy="60" pathLength="100" fill="none" stroke="${c}" stroke-width="9" stroke-dasharray="${l} ${100-l}" stroke-dashoffset="${-o}" transform="rotate(-90 60 60)"/>`;o+=v/C*100;return r}).join(''):'';
+return `<svg class="plt" viewBox="0 0 120 120" width="${z}" height="${z}"><circle cx="60" cy="60" r="58" fill="var(--sf2)" stroke="var(--ln)" stroke-width="2"/><circle cx="60" cy="60" r="47" fill="none" stroke="var(--ln)" stroke-width="9" opacity=".5"/>${arcs}<circle cx="60" cy="60" r="36" fill="var(--sf)" stroke="var(--ln)"/><circle cx="60" cy="60" r="31" fill="none" stroke="${L<0?'var(--ac)':'var(--cy)'}" stroke-width="3" pathLength="100" stroke-dasharray="${pr} ${100-pr}" stroke-linecap="round" transform="rotate(-90 60 60)"/><text x="60" y="58" text-anchor="middle" class="num" font-size="17" font-weight="700" fill="var(--tx)">${Math.abs(L)}</text><text x="60" y="73" text-anchor="middle" font-size="8.5" fill="var(--mu)">${L<0?'فوق الهدف':'المتبقي'}</text></svg>`}
+const nMb=(l,v,g,c)=>`<div class="mb"><span>${l}</span><div><i style="width:${Math.min(100,v/(g||1)*100)}%;background:${c}"></i></div><b class="num">${Math.round(v)}/${g}</b></div>`;
+function nFgH(){const q=nsr.toLowerCase(),h=nAll().map((f,i)=>[f,i]).filter(([f])=>(ncat=='All'||f.c==ncat)&&(!q||(f.n+(f.a||'')).toLowerCase().includes(q))).map(([f,i])=>`<div class="fc ${i==nsel?'on':''}" onclick="nSel(${i})"><b>${esc(nFn(f))}</b><small>${esc(nFu(f.u))}</small><span class="num">${nFk(f)}</span></div>`).join('');return h||'<div class="pl">مفيش نتيجة — ضيف أكلتك بزرار + أكلة من عندك</div>'}
+const nFgR=()=>{$('#nfg').innerHTML=T(nFgH())};
+const nPlH=()=>['All','Egypt',...new Set(FOODS.map(f=>f.c).filter(c=>c!='Egypt')),...(S.cf.length?['Mine']:[])].map(c=>`<span class="${c==ncat?'on':''}" onclick="ncat='${c}';$('#npl').innerHTML=T(nPlH());nFgR()">${nCA[c]}</span>`).join('');
+function nSpH(){const f=nAll()[nsel];if(!f)return'';return `<div class="row" style="margin-top:12px"><b>${esc(nFn(f))}</b><input type="number" min="0" step="any" value="${nq}" style="max-width:100px" oninput="nq=+this.value;nPv()"><span class="chip">${esc(nFu(f.u))}</span><b class="num" id="npv">${Math.round(f.cal*nq)} kcal</b></div><div class="pick" style="margin:10px 0">${nM.map(m=>`<span class="${m[0]==nm?'on':''}" onclick="nm='${m[0]}';$('#nsp').innerHTML=T(nSpH())">${m[2]} ${m[1]}</span>`).join('')}</div><button class="b" onclick="nAdd()">+ ضيف للوجبة</button>`}
+const nPv=()=>{const f=nAll()[nsel];$('#npv').textContent=Math.round(f.cal*(nq||0))+' kcal'};
+function nSel(i){nsel=i;nq=nIsG(nAll()[i])?100:1;$('#nsp').innerHTML=T(nSpH());nFgR()}
+function nPush(f,q,m){const d=S.n[nd]=S.n[nd]||{it:[],wa:0},r=x=>Math.round(x*10)/10;d.it.push({n:f.n,a:f.a||f.n,u:f.u,q,m,k:Math.round(f.cal*q),p:r(f.p*q),cb:r(f.cb*q),f:r(f.f*q)});save();render();toast('اتضاف ✓')}
+function nAdd(){const f=nAll()[nsel];if(!f||!(nq>0))return toast('اكتب كمية صح');nPush(f,nq,nm)}
+function nQA(n){const f=nAll().find(x=>x.n==n);if(f)nPush(f,nDQ[n]||(nIsG(f)?100:1),nMd())}
+function nDel(i){S.n[nd].it.splice(i,1);save();render()}
+const nClr=()=>cf('تمسح أكل اليوم ده؟',()=>{delete S.n[nd];save();render()});
+function nCpY(){const y=nDay(addD(nd,-1)).it;if(!y.length)return toast('مفيش أكل متسجل إمبارح');const d=S.n[nd]=S.n[nd]||{it:[],wa:0};d.it.push(...cl(y));save();render();toast('اتنسخ ✓')}
+function nWa(i){const d=S.n[nd]=S.n[nd]||{it:[],wa:0};d.wa=d.wa==i+1?i:i+1;save();render()}
+const nSh=k=>{nd=addD(nd,k);render()};
+function nCF(){openM(`<h2>أكلة من عندك</h2><div class="fld"><label>الاسم</label><input id="nc0"></div><div class="pf"><div><label class="sub">سعرات الحصة</label><input id="nc1" type="number"></div><div><label class="sub">بروتين (جم)</label><input id="nc2" type="number" step="any"></div><div><label class="sub">كارب (جم)</label><input id="nc3" type="number" step="any"></div><div><label class="sub">دهون (جم)</label><input id="nc4" type="number" step="any"></div></div><div class="row" style="margin-top:12px"><button class="b" onclick="nSaveCF()">حفظ</button><button class="b g" onclick="closeM()">إلغاء</button></div>`)}
+function nSaveCF(){const n=$('#nc0').value.trim(),k=+$('#nc1').value;if(!n||!(k>0))return toast('اكتب الاسم والسعرات');S.cf.push({n,a:n,c:'Mine',u:'serving',cal:k,p:+$('#nc2').value||0,cb:+$('#nc3').value||0,f:+$('#nc4').value||0});save();closeM();render();toast('اتحفظ ✓')}
+let nDv='water',nDml=250;
+const nDrinks=[['water','💧','مياه',0],['tea','🍵','شاي',0],['coffee','☕','قهوة',0],['Orange juice','🧃','عصير برتقال',1],['Sugarcane juice','🥤','عصير قصب',1],['Milk (whole)','🥛','لبن',1],['Soda','🥫','مياه غازية',1]];
+const nLiq=d=>{const x=nDay(d);return (x.wa||0)*250+(x.dr||[]).reduce((a,y)=>a+y.ml,0)+x.it.filter(i=>i.u=='ml').reduce((a,i)=>a+i.q,0)};
+const nNeed=d=>{const w=+(S.pf||{}).wt,b=w>25?Math.round(w*35/50)*50:2500,tr=!!(S.w[d]&&S.w[d].exs.length)||!!S.p[d];return{b,tr,t:b+(tr?500:0)}};
+function nWater(d){const n=nNeed(d),L=nLiq(d),x=nDay(d),pc=Math.min(100,L/n.t*100),ls=(x.wa?[`<span>💧 ${x.wa*250} <b onclick="nDrDel(-1)" style="cursor:pointer">✕</b></span>`]:[]).concat((x.dr||[]).map((y,i)=>`<span>${nDrinks.find(a=>a[0]==y.t)[1]} ${y.ml} <b onclick="nDrDel(${i})" style="cursor:pointer">✕</b></span>`));
+return `<div class="sub" style="margin:14px 0 6px">💧 السوائل: <b class="num">${L}/${n.t} ml</b> — ${Math.round(L/n.t*100)}%</div><div class="mb"><span>${L>=n.t?'✅':'💧'}</span><div><i style="width:${pc}%;background:var(--cy)"></i></div><b class="num">${Math.max(0,n.t-L)}</b></div><p class="sub" style="margin:6px 0 10px;font-size:13px">احتياجك ${n.b} ml (35 مل × وزنك)${n.tr?' + 500 ml عشان فيه تمرين':''}${+(S.pf||{}).wt>25?'':' — تقديري، ضيف وزنك في البروفايل'}. كل السوائل بتتحسب، حتى اللبن والعصاير من سجل الأكل.</p><div class="pick">${nDrinks.map(a=>`<span class="${a[0]==nDv?'on':''}" onclick="nDv='${a[0]}';nWr()">${a[1]} ${a[2]}</span>`).join('')}</div><div class="row" style="margin-top:10px"><div class="pick">${[150,250,330,500].map(m=>`<span class="${m==nDml?'on':''}" onclick="nDml=${m};nWr()">${m}</span>`).join('')}</div><input type="number" min="0" value="${nDml}" style="max-width:90px" oninput="nDml=+this.value"><button class="b" onclick="nDrink()">+ شربت</button></div>${ls.length?`<div class="pick" style="margin-top:10px">${ls.join('')}</div>`:''}`}
+const nWr=()=>{const e=$('#nwt');if(e)e.innerHTML=T(nWater(nd))};
+function nDrink(){const a=nDrinks.find(x=>x[0]==nDv);if(!(nDml>0))return toast('اكتب كمية صح');if(a[3]){const f=nAll().find(x=>x.n==a[0]);if(f)nPush(f,nDml,nMd());return}const d=S.n[nd]=S.n[nd]||{it:[],wa:0};(d.dr=d.dr||[]).push({t:a[0],ml:nDml});save();nWr();toast('اتسجل ✓')}
+function nDrDel(i){const d=S.n[nd];if(i<0)d.wa=0;else d.dr.splice(i,1);save();nWr()}
+Object.assign(E,{"💧 السوائل: ":"💧 Fluids: ","احتياجك ":"Your need: "," ml (35 مل × وزنك)":" ml (35 ml × body weight)"," + 500 ml عشان فيه تمرين":" + 500 ml for training"," — تقديري، ضيف وزنك في البروفايل":" — estimate, add your weight in the profile","كل السوائل بتتحسب، حتى اللبن والعصاير من سجل الأكل.":"All fluids count, including milk and juice from your food log.","مياه غازية":"Soda","مياه":"Water","شاي":"Tea","قهوة":"Coffee","عصير برتقال":"Orange juice","عصير قصب":"Sugarcane juice","لبن":"Milk","+ شربت":"+ I drank","اتسجل ✓":"Logged ✓"});
+function nFuel(){const w=S.w[nd],pl=S.p[nd],ty=(w&&w.type)||(pl&&pl.type)||'',sets=w?w.exs.reduce((a,e)=>a+e.sets.length,0):0,heavy=/leg|full|lower|رجل/i.test(ty);
+if(!w&&!pl)return `<div class="card" style="margin-top:14px"><b>🛌 يوم راحة</b><p class="sub" style="margin:4px 0 10px">مفيش تمرين متسجل ولا متخطط — ركّز على البروتين وخلّي الكارب أقل شوية.</p><button class="b g" onclick="tab='plan';render()">خطط تمرين</button></div>`;
+const ch=a=>a.map(n=>{const f=nAll().find(x=>x.n==n);return f?`<span onclick="nQA('${n}')">+ ${esc(nFn(f))}</span>`:''}).join('');
+return `<div class="card" style="margin-top:14px"><b style="font-size:18px">⚡ وقود التمرين — ${esc(ty||'تمرين')}</b><p class="sub" style="margin:4px 0 8px">${sets?`${sets} مجموعة · حرق تقريبي <b class="num">~${sets*8} kcal</b>`:'التمرين متخطط ولسه ما اتسجلش'}</p><div class="sub" style="margin:6px 0 4px">قبل التمرين بساعة</div><div class="pick">${ch(['Banana','Dates','Oats (dry)',heavy?'White rice':'Toast'])}</div><div class="sub" style="margin:10px 0 4px">بعد التمرين — استهدف 25–40 جم بروتين</div><div class="pick">${ch(['Protein shake','Egg','Chicken breast','Qarisha cheese'])}</div></div>`}
+function nWeek(){const g=nTgt(),r=[...Array(7)].map((_,i)=>addD(TODAY,i-6)).map(d=>({d,t:nTot(d),tr:vol(S.w[d])>0,n:nDay(d).it.length})),lg=r.filter(x=>x.n),av=(a,k)=>a.length?Math.round(a.reduce((s,x)=>s+x.t[k],0)/a.length):0,tr=lg.filter(x=>x.tr),rs=lg.filter(x=>!x.tr),hit=r.filter(x=>x.t.p>=g.p*.9).length;
+let tip='سجّل أكل كام يوم عشان تظهرلك ملاحظات';
+if(tr.length&&rs.length)tip=av(tr,'k')<av(rs,'k')*.9?'بتاكل أقل في أيام التمرين — التعافي هيبقى أبطأ. زوّد الكارب حوالين التمرين.':av(tr,'p')<g.p*.85?'بروتين أيام التمرين تحت هدفك — ضيف وجبة بعد التمرين.':'أكلك متوازن مع تمرينك 👌';else if(lg.length>1)tip=av(lg,'p')<g.p*.85?'متوسط البروتين أقل من هدفك — جرّب قريش أو بيض أو تونة.':'ماشي كويس، كمّل 👏';
+return `<div class="sec">الأسبوع: أكل مقابل تمرين</div><div class="card"><div class="bars" style="position:relative">${r.map((x,i)=>`<div class="bar" style="height:${Math.max(3,Math.min(100,x.t.k/(g.k*1.3)*100))}%;animation-delay:${i*60}ms;${x.tr?'':'background:var(--cy)'}"><span>${x.t.k}</span></div>`).join('')}<div style="position:absolute;inset-inline:0;bottom:76.9%;border-top:2px dashed var(--mu);opacity:.6"></div></div><div class="lbls">${r.map(x=>`<i>${+x.d.slice(8)}${x.tr?'🏋':''}</i>`).join('')}</div><p class="sub" style="margin:8px 0">🏋 يوم تمرين (برتقالي) · أزرق يوم راحة · الخط المنقط هدفك</p>
+<div class="tr"><span>متوسط السعرات (الأيام المسجلة)</span><span class="num">${av(lg,'k')} kcal</span></div><div class="tr"><span>أيام حققت فيها البروتين</span><span class="num">${hit}/7</span></div>${tr.length&&rs.length?`<div class="tr"><span>بروتين أيام التمرين / الراحة</span><span class="num">${av(tr,'p')} / ${av(rs,'p')} g</span></div>`:''}<p class="qt" style="margin:12px 0 0;font-size:16px;animation:none">${tip}</p></div>`}
+function nut(){
+const hd=`<h2>التغذية</h2><p class="sub">اللي بتاكله هو نص التمرين — وPlate بيربط الاتنين</p><div class="seg pick">${[['log','الوجبات'],['calc','الحاسبة']].map(([k,n])=>`<span class="${nsub==k?'on':''}" onclick="nsub='${k}';render()">${n}</span>`).join('')}</div>`;
+if(nsub=='calc')return hd+nCalcH();
+const d=nDay(nd),t=nTot(nd),g=nTgt(),m=nMac(g),tr=!!(S.w[nd]&&S.w[nd].exs.length),wt=8+(tr?2:0);
+const lg=nM.map(M=>{const its=d.it.map((x,i)=>[x,i]).filter(([x])=>x.m==M[0]);if(!its.length)return'';return `<div class="sec" style="margin:14px 0 6px;font-size:16px">${M[2]} ${M[1]} <span class="num" style="float:left">${its.reduce((a,[x])=>a+x.k,0)} kcal</span></div>`+its.map(([x,i])=>`<div class="tr"><span>${esc(LANG=='en'?x.n:x.a)} <small class="num">${x.q} ${esc(nFu(x.u))}</small></span><span class="num">${x.k} kcal · P${x.p}<button class="b d" onclick="nDel(${i})">✕</button></span></div>`).join('')}).join('');
+return hd+`<div class="row" style="margin:0 0 16px"><button class="b g" onclick="nSh(-1)">›</button><input type="date" value="${nd}" onchange="nd=this.value||TODAY;render()" style="max-width:170px"><button class="b g" onclick="nSh(1)">‹</button><span class="sub" style="margin:0">${fmtD(nd)}</span></div>
+<div class="card"><div class="sec" style="margin:0 0 10px">طبق اليوم</div><div class="row" style="gap:18px">${nPlate(t,g,150)}<div style="flex:1;min-width:200px">${nMb('بروتين',t.p,m.p,'var(--cy)')}${nMb('كارب',t.c,m.c,'var(--am)')}${nMb('دهون',t.f,m.f,'var(--ac)')}<p class="sub" style="margin:8px 0 0">الهدف <b class="num">${g.k}</b> kcal${S.nt?'':' — تقديري، احسب هدفك من الحاسبة'}</p></div></div>
+<div id="nwt">${nWater(nd)}</div></div>
+${nFuel()}
+<div class="card" style="margin-top:14px"><div class="row" style="justify-content:space-between"><b style="font-size:18px">ضيف أكلة</b><button class="b g" onclick="nCF()">+ أكلة من عندك</button></div><div class="pick" id="npl" style="margin:10px 0">${nPlH()}</div><input placeholder="دوّر على أكلة…" value="${esc(nsr)}" oninput="nsr=this.value;nFgR()"><div class="fgrid" id="nfg">${nFgH()}</div><div id="nsp">${nSpH()}</div></div>
+<div class="card" style="margin-top:14px"><div class="row" style="justify-content:space-between"><b style="font-size:18px">أكل اليوم</b><div class="row"><button class="b g" onclick="nCpY()">📋 زي إمبارح</button>${d.it.length?'<button class="b d" onclick="nClr()">🗑</button>':''}</div></div>${lg||'<div class="empty" style="padding:16px"><div class="em">🍽️</div>لسه مفيش أكل متسجل — اختار أكلة من فوق</div>'}</div>`+nWeek()}
+function nCrH(){const o=nPa();if(!nOk(o))return '<div class="card empty"><div class="em">🧮</div>دخّل سنك ووزنك وطولك وهتظهرلك النتيجة</div>';
+const r=nCalc(o),b=r.bmi,bl=b<18.5?['نحافة','var(--cy)']:b<25?['وزن مثالي','#2fbf71']:b<30?['وزن زيادة','var(--am)']:['سمنة','var(--ac)'],G=[['cut','تنشيف'],['maintain','ثبات'],['bulk','تضخيم']],mc=nMac({k:r[o.goal],p:Math.round(o.wt*2)});
+return `<div class="grid" style="margin-top:14px"><div class="card stat"><div class="v">${r.bmr.toLocaleString('en')}</div><div class="l">BMR — حرق الراحة (kcal)</div></div><div class="card stat"><div class="v">${r.tdee.toLocaleString('en')}</div><div class="l">TDEE — حرقك مع نشاطك (kcal)</div></div><div class="card stat"><div class="v">${b.toFixed(1)}</div><div class="l" style="color:${bl[1]}">BMI — ${bl[0]}</div></div></div>
+<div class="card" style="margin-top:14px"><div style="position:relative;height:10px;background:linear-gradient(90deg,var(--cy) 28.3%,#2fbf71 28.3% 50%,var(--am) 50% 66.7%,var(--ac) 66.7%)"><i style="position:absolute;top:-5px;left:${Math.min(98,Math.max(2,(b-10)/30*100))}%;width:4px;height:20px;background:var(--tx)"></i></div></div>
+<div class="sec">هدفك اليومي</div><div class="grid">${G.map(([k,n])=>`<div class="card day ${o.goal==k?'today':''}" onclick="pf('goal','${n}');nCr()" style="cursor:pointer"><div class="dn num">${r[k].toLocaleString('en')}</div><div class="sub" style="margin:0">${n} · kcal</div>${o.goal==k?`<button class="b" style="margin-top:10px" onclick="event.stopPropagation();nOkT(${r[k]},${Math.round(o.wt*2)})">اعتمد الهدف ده</button>`:''}</div>`).join('')}</div>
+<div class="card" style="margin-top:14px"><b>البروتين</b> <span class="num">${r.pr[0]}–${r.pr[1]} g</span><p class="sub" style="margin:6px 0 0">توزيع مقترح لهدفك: بروتين <b class="num">${mc.p}</b> g · كارب <b class="num">${mc.c}</b> g · دهون <b class="num">${mc.f}</b> g</p></div><p class="sub" style="margin-top:12px">دي تقديرات بمعادلة Mifflin-St Jeor — لخطة شخصية استشر أخصائي تغذية.</p>`}
+const nCr=()=>{$('#ncr').innerHTML=T(nCrH())};
+function nOkT(k,p){S.nt={k,p};save();nsub='log';render();toast('اتعتمد الهدف ✓')}
+function nCalcH(){const p=S.pf||{},A=[['auto','تلقائي من تمارينك ('+nW7()+' تمرين آخر 7 أيام)'],['1.2','خامل — شغل مكتبي'],['1.375','خفيف — 1 إلى 3 أيام'],['1.55','متوسط — 3 إلى 5 أيام'],['1.725','نشيط — 6 إلى 7 أيام'],['1.9','نشيط جدًا — شغل بدني وتمرين يومي']],ac=p.act||'auto';
+return `<div class="card"><div class="pf"><div><label class="sub">السن</label><input type="number" value="${esc(p.age)}" oninput="pf('age',this.value);nCr()"></div><div><label class="sub">النوع</label><select onchange="pf('sx',this.value);nCr()"><option value="m" ${p.sx!='f'?'selected':''}>ذكر</option><option value="f" ${p.sx=='f'?'selected':''}>أنثى</option></select></div><div><label class="sub">الوزن (كجم)</label><input type="number" step="any" value="${esc(p.wt)}" oninput="pf('wt',this.value);nCr()"></div><div><label class="sub">الطول (سم)</label><input type="number" value="${esc(p.ht)}" oninput="pf('ht',this.value);nCr()"></div><div style="grid-column:1/-1"><label class="sub">مستوى النشاط</label><select onchange="pf('act',this.value);nCr()">${A.map(a=>`<option value="${a[0]}" ${ac==a[0]?'selected':''}>${a[1]}</option>`).join('')}</select></div><div style="grid-column:1/-1"><label class="sub">الهدف</label><select onchange="pf('goal',this.value);nCr()"><option value="">—</option>${['تنشيف','ثبات','تضخيم'].map(g=>`<option ${p.goal==g?'selected':''}>${g}</option>`).join('')}</select></div></div><p class="sub" style="margin:10px 0 0">البيانات دي نفسها بروفايلك — أي تعديل هنا بيتحدّث في الداشبورد.</p></div><div id="ncr">${nCrH()}</div>`}
+/* wrap dashboard + workout log */
+const _d0=dash;dash=()=>{const t=nTot(TODAY),g=nTgt(),m=nMac(g),st=nStreak();return _d0().replace('<div class="sec">حجم التمرين آخر 14 يوم</div>',`<div class="sec">التغذية النهاردة</div><div class="card"><div class="row" style="gap:16px">${nPlate(t,g,110)}<div style="flex:1;min-width:170px"><b class="num" style="font-size:28px">${t.k}</b> <span class="sub">/ ${g.k} kcal</span>${nMb('بروتين',t.p,m.p,'var(--cy)')}<p class="sub" style="margin:6px 0 0">🥩 ${st} أيام بروتين ورا بعض · 💧 <span class="num">${nLiq(TODAY)}/${nNeed(TODAY).t} ml</span></p></div><button class="b" onclick="nd=TODAY;go('nut')">سجّل أكلة</button></div></div><div class="sec">حجم التمرين آخر 14 يوم</div>`)};
+const _l0=log;log=()=>{const t=nTot(logDate),g=nTgt();return _l0().replace('<h2>تمرين اليوم</h2>',`<h2>تمرين اليوم</h2><span class="chip nstrip num" onclick="nd=logDate;go('nut')">🍽 ${t.k}/${g.k} kcal · P ${Math.round(t.p)}/${g.p} g</span>`)};
+Object.assign(E,{"التغذية":"Nutrition","التغذية النهاردة":"Nutrition today","الوجبات":"Meals","الحاسبة":"Calculator","اللي بتاكله هو نص التمرين — وPlate بيربط الاتنين":"What you eat is half the workout — Plate links the two","طبق اليوم":"Today's plate","المتبقي":"Left","فوق الهدف":"Over","فطار":"Breakfast","غدا":"Lunch","عشا":"Dinner","سناك":"Snack","بروتين":"Protein","كارب":"Carbs","دهون":"Fat","الكل":"All","أكل مصري":"Egyptian","نشويات":"Grains","ألبان":"Dairy","فاكهة":"Fruit","خضار":"Vegetables","بقوليات":"Legumes","سناكس":"Snacks","مشروبات":"Drinks","بتاعتي":"Mine","الهدف ":"Target ","— تقديري، احسب هدفك من الحاسبة":" — estimated, set yours in the calculator","مياه اليوم: ":"Water today: ","كوباية":"cups"," (يوم تمرين = +2)":" (training day = +2)","⚡ وقود التمرين — ":"⚡ Workout fuel — ","مجموعة · حرق تقريبي":"sets · est. burn","التمرين متخطط ولسه ما اتسجلش":"Planned, not logged yet","قبل التمرين بساعة":"Pre-workout (1 hour before)","بعد التمرين — استهدف 25–40 جم بروتين":"Post-workout — aim for 25–40 g protein","🛌 يوم راحة":"🛌 Rest day","مفيش تمرين متسجل ولا متخطط — ركّز على البروتين وخلّي الكارب أقل شوية.":"No workout logged or planned — keep protein high and carbs a bit lower.","خطط تمرين":"Plan a workout","ضيف أكلة":"Add food","+ أكلة من عندك":"+ Custom food","دوّر على أكلة…":"Search food…","مفيش نتيجة — ضيف أكلتك بزرار + أكلة من عندك":"No match — add your own with + Custom food","+ ضيف للوجبة":"+ Add to meal","أكل اليوم":"Food log","📋 زي إمبارح":"📋 Same as yesterday","لسه مفيش أكل متسجل — اختار أكلة من فوق":"Nothing logged yet — pick a food above","الأسبوع: أكل مقابل تمرين":"Week: food vs training","🏋 يوم تمرين (برتقالي) · أزرق يوم راحة · الخط المنقط هدفك":"🏋 training day (orange) · blue = rest day · dashed line = your target","متوسط السعرات (الأيام المسجلة)":"Avg calories (logged days)","أيام حققت فيها البروتين":"Days protein target hit","بروتين أيام التمرين / الراحة":"Protein: training / rest days","سجّل أكل كام يوم عشان تظهرلك ملاحظات":"Log a few days of food to see insights","بتاكل أقل في أيام التمرين — التعافي هيبقى أبطأ. زوّد الكارب حوالين التمرين.":"You eat less on training days — recovery will be slower. Add carbs around training.","بروتين أيام التمرين تحت هدفك — ضيف وجبة بعد التمرين.":"Training-day protein is under target — add a post-workout meal.","أكلك متوازن مع تمرينك 👌":"Your eating matches your training 👌","متوسط البروتين أقل من هدفك — جرّب قريش أو بيض أو تونة.":"Average protein is under target — try cottage cheese, eggs or tuna.","ماشي كويس، كمّل 👏":"Going well, keep it up 👏","سجّل أكلة":"Log food","أيام بروتين ورا بعض":"day protein streak","أكلة من عندك":"Custom food","سعرات الحصة":"Calories per serving","بروتين (جم)":"Protein (g)","كارب (جم)":"Carbs (g)","دهون (جم)":"Fat (g)","اكتب الاسم والسعرات":"Enter name and calories","اكتب كمية صح":"Enter a valid amount","اتضاف ✓":"Added ✓","مفيش أكل متسجل إمبارح":"Nothing logged yesterday","تمسح أكل اليوم ده؟":"Delete this day's food?","النوع":"Sex","ذكر":"Male","أنثى":"Female","مستوى النشاط":"Activity level","تلقائي من تمارينك (":"Auto from your workouts (","تمرين آخر 7 أيام)":"workouts, last 7 days)","خامل — شغل مكتبي":"Sedentary — desk job","خفيف — 1 إلى 3 أيام":"Light — 1 to 3 days","متوسط — 3 إلى 5 أيام":"Moderate — 3 to 5 days","نشيط — 6 إلى 7 أيام":"Active — 6 to 7 days","نشيط جدًا — شغل بدني وتمرين يومي":"Very active — physical job + daily training","البيانات دي نفسها بروفايلك — أي تعديل هنا بيتحدّث في الداشبورد.":"This is your profile data — edits here update the dashboard.","دخّل سنك ووزنك وطولك وهتظهرلك النتيجة":"Enter your age, weight and height to see results","BMR — حرق الراحة (kcal)":"BMR — resting burn (kcal)","TDEE — حرقك مع نشاطك (kcal)":"TDEE — burn with activity (kcal)","نحافة":"Underweight","وزن مثالي":"Healthy weight","وزن زيادة":"Overweight","سمنة":"Obese","هدفك اليومي":"Your daily target","اعتمد الهدف ده":"Set as my target","اتعتمد الهدف ✓":"Target set ✓","البروتين":"Protein","توزيع مقترح لهدفك: ":"Suggested split: ","دي تقديرات بمعادلة Mifflin-St Jeor — لخطة شخصية استشر أخصائي تغذية.":"Estimates via the Mifflin-St Jeor formula — see a dietitian for a personal plan."});
+KEYS.length=0;KEYS.push(...Object.keys(E).sort((a,b)=>b.length-a.length));
+render();
+</script></body></html>
